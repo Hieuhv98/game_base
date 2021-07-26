@@ -4,7 +4,5 @@ using UnityEngine;
 
 public class GamePlayController : MonoBehaviour
 {
-    public void ShowWin() { }
 
-    public void ShowLose() { }
 }

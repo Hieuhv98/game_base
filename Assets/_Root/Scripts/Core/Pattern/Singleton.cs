@@ -1,4 +1,4 @@
-namespace GameName.Pattern
+namespace Game_Base.Pattern
 {
     using UnityEngine;
 
