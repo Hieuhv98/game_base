@@ -3,13 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AdsManager : Singleton<AdsManager>
+namespace Game_Base.Control
 {
-    // show
-    public void ShowAdsBanner() { }
-    public void ShowAdsInterstitial() { }
-    public void ShowAdsRewared() { }
+    public class AdsManager : Singleton<AdsManager>
+    {
+        // show
+        public void ShowAdsBanner() { }
+        public void ShowAdsInterstitial() { }
+        public void ShowAdsRewared() { }
 
-    // hide
-    public void HideAdsBanner() { }
+        // hide
+        public void HideAdsBanner() { }
+    }
 }
+

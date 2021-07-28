@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GameData
+namespace Game_Base.Data 
 {
-    public static int LevelCurrent { set; get; } = 1;
+    public static class GameData
+    {
+        public static int LevelCurrent { set; get; } = 1;
+    }
 }
+
