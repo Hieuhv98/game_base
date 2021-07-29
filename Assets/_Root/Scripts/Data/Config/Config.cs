@@ -1,4 +1,5 @@
 ﻿using Game_Base.Common;
+using Game_Base.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,10 +12,10 @@ namespace Game_Base.Data
         public static Config Instane => _instance ? _instance : Resources.Load<Config>(Constant.CONFIG_PATH);
 
         [SerializeField] private bool isTest;
-        [SerializeField] private GameObject levelTest;
+        [SerializeField] private LevelMap levelTest;
 
         public static bool IsTest { set => Instane.isTest = value; get => Instane.isTest; }
-        public static GameObject LevelTest { set => Instane.levelTest = value; get => Instane.levelTest; }
+        public static LevelMap LevelTest { set => Instane.levelTest = value; get => Instane.levelTest; }
     }
 }
 

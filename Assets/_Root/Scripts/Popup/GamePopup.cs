@@ -38,7 +38,7 @@ namespace Game_Base.GameUI
                 // initialize
                 var popup = (PopupWin)popupWinHandler;
                 Popup.Show(popupWinHandler);
-                popup.Initialize(actionNextLevel);
+                popup.Initialize(Hide, actionNextLevel);
             }
         }
 
@@ -58,10 +58,13 @@ namespace Game_Base.GameUI
             void Display()
             {
                 var popup = (PopupLose)popupLoseHandler;
-                popup.Initialize(actionReplay);
+                popup.Initialize(Hide, actionReplay);
                 Popup.Show(popupLoseHandler);
             }
         }
+
+        public void Hide() { Popup.Hide(); }
+        public void HideAll() { Popup.HideAll(); }
     }
 }
 

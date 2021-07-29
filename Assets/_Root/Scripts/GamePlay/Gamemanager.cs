@@ -1,10 +1,9 @@
-﻿using Game_Base.Common;
+﻿using Cysharp.Threading.Tasks;
+using Game_Base.Common;
 using Game_Base.Data;
 using Game_Base.GameUI;
 using Game_Base.Pattern;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -16,9 +15,10 @@ namespace Game_Base.Control
         public Transform levelTransform;
 
         public EGameStatus eGameStatus;
+        public EGameLoadData eGameLoadData;
 
         private GameObject _levelCurrent;
-        private GameObject _levelOld;
+        private GameObject _levelView;
 
         private void OnEnable()
         {
@@ -38,16 +38,15 @@ namespace Game_Base.Control
         #region level map
         private async void LoadLevelMap()
         {
-            eGameStatus = EGameStatus.GAME_START;
-            eGameStatus = EGameStatus.GAME_LOADING;
+            eGameLoadData = EGameLoadData.GAME_DATA_LOADING;
             _levelCurrent = await BridgeData.GetLevel(GameData.LevelCurrent);
             //_levelCurrent.SetActive(false);
-            eGameStatus = EGameStatus.GAME_READY;
+            eGameLoadData = EGameLoadData.GAME_DATA_READY;
         }
 
         private void ShowLevelMap()
         {
-            if (_levelOld != null) DestroyLevelMap();
+            if(_levelView != null) DestroyLevelMap();
 
             StartCoroutine(WaitForShowLevelMap());
             gamePlayController.ShowAdsBanner();
@@ -55,13 +54,16 @@ namespace Game_Base.Control
 
         private IEnumerator WaitForShowLevelMap()
         {
-            yield return new WaitUntil(() => eGameStatus == EGameStatus.GAME_READY);
+            yield return new WaitUntil(() => eGameLoadData == EGameLoadData.GAME_DATA_READY);
+            eGameStatus = EGameStatus.GAME_START;
+
+            _levelView = Instantiate(_levelCurrent, levelTransform.transform);
+
             eGameStatus = EGameStatus.GAME_PLAYING;
-            _levelOld = _levelCurrent;
-            Instantiate(_levelCurrent, levelTransform.transform);
+
             //_levelCurrent.SetActive(true);
         }
-        private void DestroyLevelMap() { Destroy(_levelOld); }
+        private void DestroyLevelMap() {Destroy(_levelView);}
         #endregion
 
         #region game
@@ -87,7 +89,7 @@ namespace Game_Base.Control
         }
         public void GameReplayLevel()
         {
-            if (eGameStatus == EGameStatus.GAME_PLAYING)
+            if (eGameStatus == EGameStatus.GAME_PLAYING || eGameStatus == EGameStatus.GAME_LOSE)
             {
                 ShowLevelMap();
             }
@@ -103,20 +105,23 @@ namespace Game_Base.Control
         public enum EGameStatus
         {
             GAME_START,
-            GAME_LOADING,
-            GAME_READY,
             GAME_PLAYING,
             GAME_WIN,
             GAME_LOSE
         }
 
+        public enum EGameLoadData 
+        {
+            GAME_DATA_LOADING,
+            GAME_DATA_READY,
+        }
+
         public static class BridgeData
         {
-            public static async Task<GameObject> GetLevel(int index)
+            public static async UniTask<GameObject> GetLevel(int index)
             {
-                if (Config.IsTest) return Config.LevelTest;
-                Debug.Log(string.Format(Constant.LEVEL, index));
-                return await Addressables.LoadAssetAsync<GameObject>(string.Format(Constant.LEVEL, index)).Task;
+                if (Config.IsTest) return Config.LevelTest.gameObject;
+                return await Addressables.LoadAssetAsync<GameObject>(string.Format(Constant.LEVEL, index));
             }
         }
     }
