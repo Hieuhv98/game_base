@@ -1,5 +1,66 @@
 {
   "dependencies": {
+    "com.google.external-dependency-manager": {
+      "version": "https://github.com/Gamee-Studio/external-dependency-manager.git?path=Assets/_Root#1.2.161-pre1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6524e06a946d3a5cff76e967c6d6588c528ee7e6"
+    },
+    "com.google.firebase.analytics": {
+      "version": "https://github.com/Gamee-Studio/firebase-analytics.git?path=Assets/_Root#7.0.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.firebase.app": "7.0.1"
+      },
+      "hash": "220591e97e6a0eb22cb4e67ca93bde938062ccaa"
+    },
+    "com.google.firebase.app": {
+      "version": "https://github.com/Gamee-Studio/firebase-app.git?path=Assets/_Root#7.0.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.external-dependency-manager": "1.2.161"
+      },
+      "hash": "bfd4e50a4a993ffe199d45258979bcae20bc3e9c"
+    },
+    "com.google.firebase.auth": {
+      "version": "https://github.com/Gamee-Studio/firebase-auth.git?path=Assets/_Root#7.0.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.firebase.app": "7.0.1"
+      },
+      "hash": "ca25b3378e0fa31da5003b74bba4997d757903c2"
+    },
+    "com.google.firebase.database": {
+      "version": "https://github.com/Gamee-Studio/firebase-database.git?path=Assets/_Root#7.0.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.firebase.auth": "7.0.1"
+      },
+      "hash": "030ee8dbc0acff2c6bf951e827a46c59baa87773"
+    },
+    "com.google.firebase.remote-config": {
+      "version": "https://github.com/Gamee-Studio/firebase-remote-config.git?path=Assets/_Root#7.0.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.firebase.app": "7.0.1"
+      },
+      "hash": "f45c46602db5738af72f0601927fa9b86755804a"
+    },
+    "com.lance.local-notification": {
+      "version": "https://github.com/yenmoc/local-notification.git?path=Assets/_Root",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.mobile.notifications": "1.3.2"
+      },
+      "hash": "253c6147a139120fad0c49c3dc7d908d1437de0a"
+    },
     "com.neuecc.unirx": {
       "version": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
       "depth": 0,
@@ -152,6 +213,15 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.mobile.notifications": {
+      "version": "1.3.2",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.androidjni": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.multiplayer-hlapi": {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game_Base.Editor
+namespace Game_Base.Control
 {
     public class LevelMap : MonoBehaviour
     {
