@@ -96,6 +96,7 @@ namespace Game_Base.Control
             else if (eGameStatus == EGameStatus.GAME_WIN)
             {
                 GameData.LevelCurrent--;
+                LoadLevelMap();
                 ShowLevelMap();
             }
         }
