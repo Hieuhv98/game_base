@@ -1,2 +1,2 @@
-# Game-Pin
+# game-base
 code base
