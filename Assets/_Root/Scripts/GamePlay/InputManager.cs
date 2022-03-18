@@ -1,18 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using Gamee_Hiukka.Common;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using Gamee_Hiukka.Data;
 
-public class InputManager : MonoBehaviour
+namespace Gamee_Hiukka.Control 
 {
-    // Start is called before the first frame update
-    void Start()
+    public class InputManager : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private Gamemanager gamemanager;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void Update()
+        {
+            if (gamemanager.State != EGameState.GAME_PLAYING) return;
+        }
     }
 }

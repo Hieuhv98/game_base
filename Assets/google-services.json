@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "340344167345",
+    "project_id": "huggy-time",
+    "storage_bucket": "huggy-time.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340344167345:android:493997f08e9330dd13fb90",
+        "android_client_info": {
+          "package_name": "com.gamee.huggytimepin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340344167345-n88fnoruq6g3unsi19mtqlulvbqd0hkv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzXMfeCPeIDiBUAw0HcBWg5rnjOVyHMoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340344167345-n88fnoruq6g3unsi19mtqlulvbqd0hkv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bd893011d3d7ad459eaf63c6f0364be, type: 3}
+  m_Name: WeekRewardData 3
+  m_EditorClassIdentifier: 
+  rewards:
+  - day: 22
+    coin: 10000
+    icon: {fileID: 0}
+  - day: 23
+    coin: 11000
+    icon: {fileID: 0}
+  - day: 24
+    coin: 12000
+    icon: {fileID: 0}
+  - day: 25
+    coin: 13000
+    icon: {fileID: 0}
+  - day: 26
+    coin: 14000
+    icon: {fileID: 0}
+  - day: 27
+    coin: 15000
+    icon: {fileID: 0}
+  - day: 28
+    coin: 16000
+    icon: {fileID: 0}

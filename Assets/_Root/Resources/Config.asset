@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36bd422ab3451243ac89c050b9ef066, type: 3}
+  m_Name: Config
+  m_EditorClassIdentifier: 
+  levelMax: 2
+  interstitialAdShowCount: 2
+  interstitialAdFirstShowCount: 3
+  timeInterAdShow: 25
+  timeInterAdShowLose: 25
+  isShowInterAdsLose: 0
+  watchVideoValue: 5
+  eggAdsValue: 2
+  autoStartGame: 0
+  styleThemeValue: 1
+  styleHeroValue: 2
+  stickSpeedBackwardCoefficient: 5
+  isTest: 0
+  levelTest: {fileID: 0}
+  isAdmob: 0
+  admobAndroidBannerId: ca-app-pub-8566745611252640/3512982444
+  admobAndroidIntertitialId: ca-app-pub-8566745611252640/9886819107
+  admobAndroidRewardedId: ca-app-pub-8566745611252640/5947574099
+  admobAndroidRewardedIntertitialId: ca-app-pub-2954224017334927/8087504625
+  admobIosBannerId: ca-app-pub-3940256099942544/2934735716
+  admobIosIntertitialId: ca-app-pub-3940256099942544/4411468910
+  admobIosRewardedId: ca-app-pub-3940256099942544/3986624511
+  admobIosRewardedIntertitialId: ca-app-pub-2954224017334927/8087504625
+  idDeviceTests: []

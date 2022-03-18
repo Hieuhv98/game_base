@@ -1,4 +1,4 @@
-namespace Game_Base.Pattern
+namespace Gamee_Hiukka.Pattern
 {
     using UnityEngine;
 

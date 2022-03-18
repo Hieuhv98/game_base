@@ -1,0 +1,74 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# https://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:f4923549b5626f3ab02107e676e02f54:37c9351eff88d900994f48a12c1ecb64:a04f9b87b454c7401e938e1dbad694cc$
+#
+:format=40300
+:texture=gameplay.png
+:size=2028x1696
+:pivotpoints=enabled
+:borders=enabled
+
+gamepaly_stick_hold;1942;1520;47;71; 0.5;0.5; 0;0;0;0
+gameplay_arrow;515;1187;502;140; 0.5;0.5; 0;0;0;0
+gameplay_bomb;515;1329;502;204; 0.5;0.5; 0;0;0;0
+gameplay_bullet;1203;561;362;129; 0.5;0.5; 0;0;0;0
+gameplay_drop_texture;1;1021;512;512; 0.5;0.5; 0;0;0;0
+gameplay_fragment_!;1348;835;227;150; 0.5;0.5; 0;0;0;0
+gameplay_fragment_2;621;1024;168;161; 0.5;0.5; 0;0;0;0
+gameplay_fragment_3;1828;140;134;134; 0.5;0.5; 0;0;0;0
+gameplay_fragment_4;1827;1372;199;128; 0.5;0.5; 0;0;0;0
+gameplay_fragment_5;1012;807;334;178; 0.5;0.5; 0;0;0;0
+gameplay_gift_complete;1156;1;103;131; 0.5;0.5; 0;0;0;0
+gameplay_gift_empty;1828;7;103;131; 0.5;0.5; 0;0;0;0
+gameplay_gift_progeress_foreground;1567;554;447;73; 0.5;0.5; 0;0;0;0
+gameplay_gift_progressbar;1;2;433;59; 0.5;0.5; 0;0;0;0
+gameplay_gold1;1165;136;38;32; 0.5;0.5; 0;0;0;0
+gameplay_gold2;1991;1520;34;34; 0.5;0.5; 0;0;0;0
+gameplay_gold3;1089;130;38;38; 0.5;0.5; 0;0;0;0
+gameplay_gold4;1991;1556;35;35; 0.5;0.5; 0;0;0;0
+gameplay_gold5;935;862;38;32; 0.5;0.5; 0;0;0;0
+gameplay_gold6;874;448;171;76; 0.5;0.5; 0;0;0;0
+gameplay_gold7;966;12;188;112; 0.5;0.5; 0;0;0;0
+gameplay_hero_complete;791;1033;112;152; 0.5;0.5; 0;0;0;0
+gameplay_hero_shadow;905;1033;112;152; 0.5;0.5; 0;0;0;0
+gameplay_ice_stone;436;2;59;59; 0.5;0.5; 0;0;0;0
+gameplay_lava_Stone;874;835;59;59; 0.5;0.5; 0;0;0;0
+gameplay_lever_base;1593;629;401;174; 0.5;0.5; 0;0;0;0
+gameplay_lever_handle;1827;1013;197;357; 0.5;0.5; 0;0;0;0
+gameplay_mine_item;479;95;436;343; 0.5;0.5; 0;0;0;0
+gameplay_move_bar;917;126;170;42; 0.5;0.5; 60;60;0;0
+gameplay_pin;144;437;120;574; 0.5;0.09999999999999998; 0;0;50;125
+gameplay_quest_chest;874;896;136;135; 0.5;0.5; 0;0;0;0
+gameplay_quest_gold;1261;19;136;135; 0.5;0.5; 0;0;0;0
+gameplay_quest_item;1534;417;136;135; 0.5;0.5; 0;0;0;0
+gameplay_quest_monster;1690;139;136;135; 0.5;0.5; 0;0;0;0
+gameplay_quest_wife;1690;2;136;135; 0.5;0.5; 0;0;0;0
+gameplay_stick;1;416;141;595; 0.5;0.5; 0;0;0;0
+gameplay_stick_dot;1129;134;34;34; 0.5;0.5; 0;0;0;0
+gameplay_trap_1;515;1022;104;163; 0.5;0.5; 0;0;0;0
+gameplay_trap_2;1399;5;104;195; 0.5;0.5; 0;0;0;0
+gameplay_trap_3;497;9;224;84; 0.5;0.5; 0;0;0;0
+gameplay_trap_saw;1505;17;183;183; 0.5;0.5; 0;0;0;0
+gameplay_trap_stone;1602;1043;206;208; 0.5;0.5; 0;0;0;0
+gameplay_trap_stone_pillar;1205;156;115;250; 0.5;0.5; 0;0;0;0
+gameplay_wall_1;1827;1502;38;151; 0.5;0.5; 0;0;0;0
+gameplay_wall_2;1025;1655;840;40; 0.5;0.5; 0;0;0;0
+gameplay_wall_3;1867;1518;73;73; 0.5;0.5; 0;0;0;0
+gameplay_wall_4;1203;692;388;113; 0.5;0.5; 97;97;28;28
+gameplay_wall_5;874;526;327;277; 0.5;0.5; 0;0;0;0
+gameplay_wall_6;917;170;276;276; 0.5;0.5; 0;0;0;0
+gameplay_wall_7;1867;1593;158;102; 0.5;0.5; 40;39;26;25
+gameplay_wall_8;723;14;241;79; 0.5;0.5; 60;60;20;20
+gameplay_wall_9;1203;408;329;151; 0.5;0.5; 0;0;0;0
+gameplay_wall_10;1690;276;319;276; 0.5;0.5; 0;0;0;0
+gameplay_wall_11;1602;805;411;206; 0.5;0.5; 0;0;0;0
+gameplay_wall_12;1;63;476;351; 0.5;0.5; 0;0;0;0
+gameplay_wall_13;266;440;606;571; 0.5;0.5; 0;0;0;0
+gameplay_wall_14;1025;1253;800;400; 0.5;0.5; 0;0;0;0
+gameplay_wall_15;1322;202;317;204; 0.5;0.5; 79;79;51;51
+gameplay_wall_roof2;1;1535;1022;160; 0.5;0.5; 0;0;0;0
+gameplay_wolfmeat;1019;987;581;264; 0.5;0.5; 0;0;0;0

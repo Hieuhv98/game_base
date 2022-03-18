@@ -1,10 +1,10 @@
-﻿using Game_Base.Data;
-using Game_Base.Pattern;
+﻿using Gamee_Hiukka.Data;
+using Gamee_Hiukka.Pattern;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game_Base.Control 
+namespace Gamee_Hiukka.Control 
 {
     public class SettingManager : Singleton<SettingManager>
     {

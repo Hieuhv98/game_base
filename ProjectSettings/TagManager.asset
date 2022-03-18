@@ -3,7 +3,34 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Parent
+  - Effect
+  - Stick
+  - Fire
+  - Water
+  - Poison
+  - Enemy
+  - IceLiquid
+  - Ice
+  - Chan
+  - Cube
+  - Wall
+  - Rope
+  - Bullet
+  - Stone
+  - Tag_Stone
+  - Trap_Other
+  - IceBlock
+  - Ground_Jump
+  - Box
+  - StoneLiquid
+  - Portal
+  - Mirror
+  - ChangeDir
+  - Search
+  - Key
+  - Chest
   layers:
   - Default
   - TransparentFX
@@ -13,25 +40,25 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Object
+  - Ground
+  - Effect
+  - Target
+  - Player
+  - Liquid
+  - BackGround
+  - Stone
+  - Element
+  - Water
+  - Fire
+  - Ice
+  - Poison
+  - IceBlock
+  - Bullet
+  - Rope
+  - Die
+  - Search
+  - Pet
   - 
   - 
   - 
@@ -43,4 +70,7 @@ TagManager:
     locked: 0
   - name: Popup
     uniqueID: 306451189
+    locked: 0
+  - name: Effect
+    uniqueID: 416501199
     locked: 0

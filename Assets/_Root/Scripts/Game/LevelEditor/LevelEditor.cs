@@ -9,14 +9,14 @@ using UnityEditor.Experimental.SceneManagement;
 using System.IO;
 using System;
 using System.Linq;
-using Game_Base.Data;
-using Game_Base.Control;
+using Gamee_Hiukka.Control;
+using Gamee_Hiukka.Data;
 
-namespace Game_Base.Editor 
+namespace Gamee_Hiukka.Editor 
 {
     public class LevelEditor : EditorWindow
     {
-        string FolderPath => Path.Combine(Application.dataPath, "_Root/Prefabs/Game");
+        string FolderPath => System.IO.Path.Combine(Application.dataPath, "_Root/Prefabs/Game");
         static GameObject _selectedPrefab;
         static Vector2 _scrollPosition;
 
@@ -95,7 +95,7 @@ namespace Game_Base.Editor
                 {
                     //LevelResources.Instance.debugMap = levelAsset;
 
-                    Config.IsTest = true;
+                    Config.IsTest= true;
                     Config.LevelTest = levelAsset;
                     EditorSceneManager.OpenScene("Assets/_Root/Scenes/Loading.unity");
                     EditorApplication.isPlaying = true;
@@ -115,7 +115,7 @@ namespace Game_Base.Editor
         {
             if (obj == PlayModeStateChange.ExitingPlayMode)
             {
-                Config.IsTest = false;
+                Config.IsTest= false;
                 Config.LevelTest = null;
             }
         }
@@ -241,30 +241,61 @@ namespace Game_Base.Editor
             if (ev.control && ev.type == EventType.MouseDown && ev.button == 1)
             {
                 GenericMenu menu = new GenericMenu();
-                menu.AddItem(new GUIContent("Link 2 Node %&a"), false, LinkTwoNode);
-                menu.AddItem(new GUIContent("Unlink 2 Node Only %&s"), false, UnlinkTwoNodeOnly);
-                menu.AddItem(new GUIContent("Unlink All With Nodes %&d"), false, UnlinkAllWithNodes);
+
+                menu.AddItem(new GUIContent("SortLeft %&a"), false, ResetSelection);
+                menu.AddItem(new GUIContent("SortUp %&w"), false, ResetSelection);
+                menu.AddItem(new GUIContent("SortRignt %&d"), false, ResetSelection);
+                menu.AddItem(new GUIContent("SortDown %&s"), false, ResetSelection);
                 menu.AddItem(new GUIContent("Cancel %&z"), false, ResetSelection);
 
                 menu.ShowAsContext();
             }
-            else if (ev.control && ev.alt && ev.keyCode == KeyCode.A)
+
+            if(ev.control && ev.alt && ev.keyCode == KeyCode.A) 
             {
-                LinkTwoNode();
-            }
-            else if (ev.control && ev.alt && ev.keyCode == KeyCode.S)
-            {
-                UnlinkTwoNodeOnly();
+                SortObjets(nodes, ESortType.LEFT);
             }
             else if (ev.control && ev.alt && ev.keyCode == KeyCode.D)
             {
-                UnlinkAllWithNodes();
+                SortObjets(nodes, ESortType.RIGHT);
+            }
+            else if (ev.control && ev.alt && ev.keyCode == KeyCode.W)
+            {
+                SortObjets(nodes, ESortType.TOP);
+            }
+            else if (ev.control && ev.alt && ev.keyCode == KeyCode.S)
+            {
+                SortObjets(nodes, ESortType.BOTTOM);
             }
             else if (ev.control && ev.alt && ev.keyCode == KeyCode.Z)
             {
                 ResetSelection();
             }
 
+        }
+
+        private void SortObjets(List<GameObject> nodes, ESortType type) 
+        {
+            for(int i = 0; i < nodes.Count; i++) 
+            {
+                Bounds[] bounds = new Bounds[i];
+                for(int j = 0; j < i; j++) 
+                {
+                    bounds[j] =  nodes[i].GetComponent<MeshRenderer>().bounds;
+                    if(j > 0) 
+                    {
+                        if(type == ESortType.RIGHT) 
+                        {
+                            for(int k = 0; k < j; k++) 
+                            {
+                                nodes[j].transform.position = nodes[j].transform.position +  new Vector3(nodes[k].transform.position.x + bounds[k].size.x / 2,
+                                    nodes[k].transform.position.y,
+                                    nodes[k].transform.position.z);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void ResetSelection()
@@ -277,23 +308,6 @@ namespace Game_Base.Editor
             Selection.activeGameObject = null;
         }
 
-        private void UnlinkTwoNodeOnly()
-        {
-            NodeUtility.UnlinkTwoNode();
-            ResetSelection();
-        }
-
-        private void UnlinkAllWithNodes()
-        {
-            /*nodeutility.unlink();
-            resetselection();*/
-        }
-
-        private void LinkTwoNode()
-        {
-            NodeUtility.LinkNodes();
-            ResetSelection();
-        }
 
         bool MouseInView
         {
@@ -345,6 +359,15 @@ namespace Game_Base.Editor
             return false;
         }
 
+        public enum ESortType 
+        { 
+            TOP,
+            LEFT,
+            RIGHT,
+            BOTTOM
+        }
     }
-#endif
 }
+
+#endif
+

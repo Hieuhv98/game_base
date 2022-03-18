@@ -1,11 +1,11 @@
-using Game_Base.Control;
-using Game_Base.Data;
+#if UNITY_EDITOR
+using Gamee_Hiukka.Control;
+using Gamee_Hiukka.Data;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-#if UNITY_EDITOR
-namespace Game_Base.Editor
+namespace Gamee_Hiukka.Editor
 {
     [CustomEditor(typeof(LevelMap))]
     public class LevelMapEditor : UnityEditor.Editor
@@ -16,15 +16,14 @@ namespace Game_Base.Editor
             if (!serializedObject.isEditingMultipleObjects)
             {
                 var level = (LevelMap) target;
-
                 
                 if (AssetDatabase.Contains(target))
                 {
                     if (GUILayout.Button("Play"))
                     {
+                        EditorSceneManager.OpenScene("Assets/_Root/Scenes/Loading.unity");
                         Config.IsTest = true;
                         Config.LevelTest = level;
-                        EditorSceneManager.OpenScene("Assets/_Root/Scenes/Loading.unity");
                         EditorApplication.isPlaying = true;
                         //todo
                     }
@@ -49,3 +48,4 @@ namespace Game_Base.Editor
     }
 }
 #endif
+

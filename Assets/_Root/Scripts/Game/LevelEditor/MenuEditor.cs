@@ -14,7 +14,7 @@ public class MenuEditor
     private static void ChangeScene(string name)
     {
         EditorSceneManager.SaveOpenScenes();
-        EditorSceneManager.OpenScene(Application.dataPath + "/FishPin/Scenes/" + name + ".unity");
+        EditorSceneManager.OpenScene(Application.dataPath + "/_Root/Scenes/" + name + ".unity");
     }
 
 

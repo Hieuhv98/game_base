@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a83fcfe6825db47b10d20ce2dcf077, type: 3}
+  m_Name: SkinResources
+  m_EditorClassIdentifier: 
+  dataAsset: {fileID: 11400000, guid: 32d8a61abd85c7f4f80db16b24629f9f, type: 2}
+  skins:
+  - skinName: Skin1
+    description: 
+    coin: 0
+    isBuyCoin: 1
+    isWatchVideo: 0
+    isDailyReward: 0
+    isGiftCode: 0
+    code: 
+    id: 63bb5c60-6804-4103-b116-8a110adf569d
+    isHas: 1
+  - skinName: Skin2
+    description: 
+    coin: 0
+    isBuyCoin: 0
+    isWatchVideo: 1
+    isDailyReward: 0
+    isGiftCode: 0
+    code: 
+    id: c7542b3c-e758-4bea-b4cb-cce3ac50c1c6
+    isHas: 0
+  - skinName: Skin3
+    description: 
+    coin: 0
+    isBuyCoin: 0
+    isWatchVideo: 1
+    isDailyReward: 0
+    isGiftCode: 0
+    code: 
+    id: 13976073-2498-461e-b524-3fc22f378c80
+    isHas: 0
+  - skinName: Skin10
+    description: 
+    coin: 0
+    isBuyCoin: 0
+    isWatchVideo: 0
+    isDailyReward: 0
+    isGiftCode: 1
+    code: LOVEHUGGEEPIN
+    id: 26085b06-7025-4dc8-a812-7089b0cc2762
+    isHas: 0
+  - skinName: Skin7
+    description: 
+    coin: 0
+    isBuyCoin: 0
+    isWatchVideo: 0
+    isDailyReward: 1
+    isGiftCode: 0
+    code: 
+    id: b2203144-7631-4389-8153-2a0586153866
+    isHas: 0
+  - skinName: Skin5
+    description: 
+    coin: 0
+    isBuyCoin: 0
+    isWatchVideo: 0
+    isDailyReward: 1
+    isGiftCode: 0
+    code: 
+    id: 530b83d9-5bc8-45ab-a4ec-283504c80fdb
+    isHas: 0
+  - skinName: Skin6
+    description: 
+    coin: 15000
+    isBuyCoin: 1
+    isWatchVideo: 0
+    isDailyReward: 0
+    isGiftCode: 0
+    code: 
+    id: 60cee328-984c-41a1-be38-b912261c0473
+    isHas: 0
+  - skinName: Skin4
+    description: 
+    coin: 20000
+    isBuyCoin: 1
+    isWatchVideo: 0
+    isDailyReward: 0
+    isGiftCode: 0
+    code: 
+    id: 8335e877-e5d9-441b-8b15-9a926fc40215
+    isHas: 0
+  - skinName: Skin9
+    description: 
+    coin: 25000
+    isBuyCoin: 1
+    isWatchVideo: 0
+    isDailyReward: 0
+    isGiftCode: 0
+    code: 
+    id: 5ec5a71a-5a4b-411a-b963-271a94944d11
+    isHas: 0
+  - skinName: Skin8
+    description: 
+    coin: 30000
+    isBuyCoin: 1
+    isWatchVideo: 0
+    isDailyReward: 0
+    isGiftCode: 0
+    code: 
+    id: 734a69bc-6b81-45e6-ade8-c4eaec044592
+    isHas: 0
