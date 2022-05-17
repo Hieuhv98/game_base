@@ -59,6 +59,7 @@ namespace Gamee_Hiukka.UI
 
             if (skinGift != null)
             {
+                coinDisplay.SetActive(false);
                 UpdateDisplay(skinGift);
             }
             else coinDisplay.SetActive(true);
