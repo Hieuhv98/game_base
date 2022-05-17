@@ -250,17 +250,6 @@ namespace Gamee_Hiukka.Control
         }
         #endregion
 
-        #region pet
-        public static void LoadPetData() 
-        {
-            PetDataController.Instance.LoadDataEggShard();
-        }
-        public static void SavePetData()
-        {
-            PetDataController.Instance.SaveDataEggShard();
-        }
-        #endregion
-
     }
 }
 

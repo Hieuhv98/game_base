@@ -13,8 +13,6 @@ public class PopupDebug : UniPopupBase
     [SerializeField] private TMP_InputField ifEnterScore;
     [SerializeField] private TMP_InputField ifEnterLevel;
     [SerializeField] private TMP_InputField ifEnterPass;
-    [SerializeField] private TMP_InputField ifEnterEggID;
-    [SerializeField] private TMP_InputField ifEnterEggValue;
     [SerializeField] private TextMeshProUGUI txtNotiPass;
 
     private int score = 0;
@@ -27,8 +25,6 @@ public class PopupDebug : UniPopupBase
     {
         ifEnterScore.contentType = TMP_InputField.ContentType.IntegerNumber;
         ifEnterLevel.contentType = TMP_InputField.ContentType.IntegerNumber;
-        ifEnterEggID.contentType = TMP_InputField.ContentType.IntegerNumber;
-        ifEnterEggValue.contentType = TMP_InputField.ContentType.IntegerNumber;
 
         ifEnterPass.contentType = TMP_InputField.ContentType.Password;
     }
@@ -64,16 +60,6 @@ public class PopupDebug : UniPopupBase
                 GameData.LevelCurrent = level;
                 GameData.LevelIndexCurrent = level - 1;
                 GameData.LevelCurrentObj = null;
-            }
-        }
-        if (int.TryParse(ifEnterEggID.text, out eggID))
-        {
-            if (eggID > 0 && eggID < PetCollection.Length + 1)
-            {
-                if (int.TryParse(ifEnterEggValue.text, out eggValue)) 
-                {
-                    PetDataController.Instance.AddEggShard(eggID - 1, eggValue);
-                }
             }
         }
 

@@ -6,6 +6,7 @@ using UnityEngine;
 using DG.Tweening;
 using Gamee_Hiukka.Data;
 using Gamee_Hiukka.GameUI;
+using System;
 
 namespace Gamee_Hiukka.Control
 {
@@ -19,28 +20,21 @@ namespace Gamee_Hiukka.Control
 
         public PlayerController Player => player;
         public ELevelTargetType Type => type;
+        public Action<EWinType> ActionLevelWin;
+        public Action ActionLevelLose;
 
         public void Awake()
         {
             player = this.GetComponentInChildren<PlayerController>();
         }
 
-        void CheckTarget() 
+        void GameWin(EWinType winType = EWinType.WIN_NORMAL)
         {
-            targetValue--;
-            if (targetValue <= 0)
-            {
-                WinNormal();
-            }
+            ActionLevelWin?.Invoke(winType);
         }
-
-        void WinNormal() 
+        void GameLose()
         {
-        }
-
-        void GameLose() 
-        {
-            Gamemanager.Instance.GameLose();
+            ActionLevelLose?.Invoke();
         }
 
         void OnDrawGizmos()

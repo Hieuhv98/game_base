@@ -90,10 +90,6 @@ namespace Gamee_Hiukka.Control
             coinDisplay.ActionUpdate -= OnCoinChange;
             coinDisplay.ActionUpdate += OnCoinChange;
 
-
-            btnNextRoom.gameObject.SetActive(false);
-            fxUnlockNewRoom.SetActive(false);
-
             coinObjMove = coinDisplay.GetComponent<ObjMoveUI>();
         }
 
@@ -225,15 +221,6 @@ namespace Gamee_Hiukka.Control
             {
                 obj.Defaut();
             }
-        }
-
-        void PlayAnimPlayerIdle()
-        {
-            skePlayer.AnimationState.SetAnimation(0, "Idle", true);
-        }
-        void PlayAnimPlayerWin()
-        {
-            skePlayer.AnimationState.SetAnimation(0, "Win", true);
         }
     }
 }

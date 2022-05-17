@@ -19,10 +19,9 @@ MonoBehaviour:
   timeInterAdShowLose: 25
   isShowInterAdsLose: 0
   watchVideoValue: 5
+  levelStartLoop: 1
   eggAdsValue: 2
   autoStartGame: 0
-  styleThemeValue: 1
-  styleHeroValue: 2
   stickSpeedBackwardCoefficient: 5
   isTest: 0
   levelTest: {fileID: 0}

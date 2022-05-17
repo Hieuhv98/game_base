@@ -25,6 +25,7 @@ namespace Gamee_Hiukka.Data
 
         public const string KEY_VERSION_DONT_UPDATE = KEY_GAME + "KEY_VERSION_DONT_UPDATE";
         public const string KEY_STATUS_UPDATE = KEY_GAME + "KEY_STATUS_UPDATE";
+        public const string LEVEL_START_LOOP = KEY_GAME + "_LEVEL_START_LOOP";
         #endregion
         #region iap
         public static string REMOVE_ADS = KEY_GAME + "REMOVE_ADS";

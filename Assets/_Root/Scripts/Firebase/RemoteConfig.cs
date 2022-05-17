@@ -37,7 +37,6 @@ namespace Gamee_Hiukka.Control
         private const string DESCRIPTION_APP = "DESCRIPTION_APP";
 
         private const string AUTO_START_GAME = "AUTO_START_GAME";
-        private const string EGG_ADS_VALUE = "EGG_ADS_VALUE";
         private readonly Dictionary<string, object> defaults = new Dictionary<string, object>();
 
         public void Init()
@@ -64,7 +63,6 @@ namespace Gamee_Hiukka.Control
             defaults.Add(VERSION_APP_IOS, "1.0");
             defaults.Add(DESCRIPTION_APP, "New Update");
             defaults.Add(AUTO_START_GAME, "false");
-            defaults.Add(EGG_ADS_VALUE, "2");
             Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults);
 
             FetchDataAsync();
@@ -141,7 +139,6 @@ namespace Gamee_Hiukka.Control
 
             GameData.DescritptionApp = Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(DESCRIPTION_APP).StringValue;
             Config.AutoStartGame = bool.Parse(Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(AUTO_START_GAME).StringValue);
-            Config.EggAdsValue = int.Parse(Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(EGG_ADS_VALUE).StringValue);
 
             DOTween.Sequence().SetDelay(.1f).OnComplete(() => AdsManager.Instance.InitAds()) ;
         }

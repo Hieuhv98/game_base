@@ -25,6 +25,13 @@ namespace Gamee_Hiukka.Data
         public static int CoinCurrent { set; get; } = 0;
         public static string MaterialBonus { set; get; }
 
+        public static int LevelStartLoop
+        {
+            get => PlayerPrefs.GetInt(DataKey.LEVEL_START_LOOP, 1);
+
+            set => PlayerPrefs.SetInt(DataKey.LEVEL_START_LOOP, value);
+        }
+
         #endregion
 
         #region config

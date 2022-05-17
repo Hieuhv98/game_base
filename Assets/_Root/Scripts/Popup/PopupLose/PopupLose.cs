@@ -22,6 +22,7 @@ namespace Gamee_Hiukka.UI
         private Action _actionClose;
         private Action _actionNextLevel;
         private Action _actionBackToHome;
+        bool isSellected = false;
 
         public void Initialize(Action actionClose, Action actionReplay, Action actionSkip, Action actionNextLevel, Action actionBackToHome)
         {
@@ -30,6 +31,7 @@ namespace Gamee_Hiukka.UI
             _actionSkip = actionSkip;
             _actionNextLevel = actionNextLevel;
             _actionBackToHome = actionBackToHome;
+            isSellected = false;
 
             AudioManager.Instance.PlayAudioGameLose();
 
@@ -46,12 +48,18 @@ namespace Gamee_Hiukka.UI
 
         private void SkipLevel() 
         {
+            if (isSellected) return;
+            isSellected = true;
+
             Hide();
             _actionSkip?.Invoke();
         }
 
         private void ReplayLevel() 
         {
+            if (isSellected) return;
+            isSellected = true;
+
             Hide();
             _actionReplay?.Invoke();
         }

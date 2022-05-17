@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 using System;
+using System.Collections.Generic;
 
 namespace Gamee_Hiukka.Control
 {
@@ -59,8 +60,19 @@ namespace Gamee_Hiukka.Control
         {
             eGameLoadData = EGameLoadData.GAME_DATA_LOADING;
 
-            if (GameData.LevelIndexCurrent >= Config.LevelMax)
+            if (GameData.LevelIndexCurrent >= Config.LevelMax - GameData.LevelStartLoop + 1)
             {
+                if (GameData.LevelStartLoop != Config.LevelStartLoop)
+                {
+                    GameData.LevelStartLoop = Config.LevelStartLoop;
+                    List<int> temp = new List<int>();
+                    for (int i = GameData.LevelStartLoop; i <= Config.LevelMax; i++)
+                    {
+                        temp.Add(i);
+                    }
+                    GameData.LevelList = temp;
+                }
+
                 Util.Shuffle(GameData.LevelList);
                 GameData.LevelIndexCurrent = 0;
                 DataController.SaveLevelList();
@@ -106,6 +118,8 @@ namespace Gamee_Hiukka.Control
 
             _levelCurrent = Instantiate(_levelLoad, levelTransform.transform);
             _levelMapCurrent = _levelCurrent.GetComponent<LevelMap>();
+            _levelMapCurrent.ActionLevelWin += GameWin;
+            _levelMapCurrent.ActionLevelLose += GameLose;
             Player = _levelMapCurrent.Player;
             gamePlayController.UpdateLevelTargetText(_levelMapCurrent.Type);
             

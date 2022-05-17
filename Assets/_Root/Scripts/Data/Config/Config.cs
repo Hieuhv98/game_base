@@ -19,7 +19,7 @@ namespace Gamee_Hiukka.Data
         [SerializeField] private int timeInterAdShowLose = 25;
         [SerializeField] private bool isShowInterAdsLose = false;
         [SerializeField] private int watchVideoValue = 5;
-        [SerializeField] private int eggAdsValue = 2;
+        [SerializeField] private int levelStartLoop = 4;
         [SerializeField] private bool autoStartGame;
 
         [Header("Pin")]
@@ -62,13 +62,13 @@ namespace Gamee_Hiukka.Data
         public static int TimeInterAdShowLose { set => Instance.timeInterAdShowLose = value; get => Instance.timeInterAdShowLose; }
         public static bool IsShowInterAdsLose { set => Instance.isShowInterAdsLose = value; get => Instance.isShowInterAdsLose; }
         public static int WatchVideoValue { set => Instance.watchVideoValue = value; get => Instance.watchVideoValue; }
-        public static int EggAdsValue { set => Instance.eggAdsValue = value; get => Instance.eggAdsValue; }
         public static int InterstitialAdShowCount { set => Instance.interstitialAdShowCount = value; get => Instance.interstitialAdShowCount; }
         public static int InterstitialAdFirstShowCount { set => Instance.interstitialAdFirstShowCount = value; get => Instance.interstitialAdFirstShowCount; }
         public static int InterstitialAdCountCurrent { set => Instance._interstitialAdCountCurrent = value; get => Instance._interstitialAdCountCurrent; }
         public static DateTime TimeAtInterstitialAdShow { set => Instance._timeAtInterstitialAdShow = value; get => Instance._timeAtInterstitialAdShow; }
         public static DateTime TimeAtInterstitialAdLoseShow { set => Instance._timeAtInterstitialAdLoseShow = value; get => Instance._timeAtInterstitialAdLoseShow; }
 
+        public static int LevelStartLoop => Instance.levelStartLoop;
         public static bool IsRotationByCamera { set ; get ; }
 
         private int _interstitialAdCountCurrent = 1;

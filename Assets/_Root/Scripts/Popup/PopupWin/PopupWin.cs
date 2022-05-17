@@ -42,6 +42,7 @@ namespace Gamee_Hiukka.UI
         float _speedLoadProcess = 6;
         private float _timeLoadProcess => _processValueUp / _speedLoadProcess;
 
+        bool isSellected = false;
         public void Initialize(Action actionClose, Action actionNextLevel, Action actionReplayLevel, Action actionBackToHome, EWinType type = EWinType.WIN_NORMAL)
         {
             _actionClose = actionClose;
@@ -49,6 +50,7 @@ namespace Gamee_Hiukka.UI
             _actionReplayLevel = actionReplayLevel;
             _actionBackToHome = actionBackToHome;
             _type = type;
+            isSellected = false;
 
             AudioManager.Instance.PlayAudioGameWin();
 
@@ -88,22 +90,34 @@ namespace Gamee_Hiukka.UI
         private void ProcessRun()
         {
             _processValueCurent = (GameData.LevelCurrent - 1) % processTimes * _processValueUp;
-
             if (_processValueCurent == 0)
             {
-                imgProcess.DOFillAmount(1, _timeLoadProcess);
+                btnNextLevel.interactable = false;
+                btnWatchVideo.interactable = false;
+
+                imgProcess.DOFillAmount(1, _timeLoadProcess).OnUpdate(() =>
+                {
+                    txtProcess.text = string.Format("{0}%", (int)(imgProcess.fillAmount * 100));
+                });
+                imgProcess.DOFillAmount(1, _timeLoadProcess).OnComplete(() => OnProcessFull());
                 txtProcess.text = string.Format("{0}%", 100);
                 GameData.IsProcessFull = true;
-                DOTween.Sequence().SetDelay(0.5f).OnComplete(() => ShowPopupUnlockSkin());
                 DataController.SaveIsProcessFull();
 
             }
-            else imgProcess.DOFillAmount(_processValueCurent / 100, _timeLoadProcess).OnComplete(() =>
+            else
             {
-                txtProcess.text = string.Format("{0}%", _processValueCurent);
-                GameData.IsProcessFull = false;
-                DataController.SaveIsProcessFull();
-            });
+                imgProcess.DOFillAmount(_processValueCurent / 100, _timeLoadProcess).OnUpdate(() =>
+                {
+                    txtProcess.text = string.Format("{0}%", (int)(imgProcess.fillAmount * 100));
+                });
+                imgProcess.DOFillAmount(_processValueCurent / 100, _timeLoadProcess).OnComplete(() =>
+                {
+                    txtProcess.text = string.Format("{0}%", _processValueCurent);
+                    GameData.IsProcessFull = false;
+                    DataController.SaveIsProcessFull();
+                });
+            }
         }
 
         public void BackToHome()
@@ -131,6 +145,9 @@ namespace Gamee_Hiukka.UI
 
         void AddCoin(int coin) 
         {
+            if (isSellected) return;
+            isSellected = true;
+
             btnHome.interactable = false;
             btnReplay.interactable = false;
 
@@ -159,7 +176,7 @@ namespace Gamee_Hiukka.UI
             Hide();
         }
 
-        private void ShowPopupUnlockSkin()
+        private void OnProcessFull()
         {
             var skins = SkinResources.Instance.GetAllSkin();
             List<SkinData> skinsNotHas = new List<SkinData>();
@@ -175,7 +192,8 @@ namespace Gamee_Hiukka.UI
                 var skinIndex = UnityEngine.Random.Range(0, skinsNotHas.Count - 1);
                 skinGift = skinsNotHas[skinIndex];
                 GamePopup.Instance.ShowPopupUnLockSkin(skinGift, UpdatePlayerSkin);
-            }           
+            }
+            else GamePopup.Instance.ShowPopupUnLockSkin(null, UpdatePlayerSkin);
         }
 
         void UpdatePlayerSkin() 
