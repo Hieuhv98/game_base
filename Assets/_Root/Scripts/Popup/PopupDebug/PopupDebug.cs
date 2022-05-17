@@ -51,7 +51,7 @@ public class PopupDebug : UniPopupBase
 
         if (int.TryParse(ifEnterScore.text, out score))
         {
-            GameData.CoinCurrent = score;
+            GameData.CoinCurrent += score;
         }
         if (int.TryParse(ifEnterLevel.text, out level))
         {

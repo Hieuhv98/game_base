@@ -6,7 +6,7 @@ namespace Gamee_Hiukka.Data
 {
     public static class DataKey
     {
-        private const string KEY_GAME = "GAMEE.COM.HUGGY_TIME_";
+        private const string KEY_GAME = "GAMEE.COM.GAME_BASE_";
 
         #region ingame
         public const string KEY_LEVEL_CURRENT = KEY_GAME + "KEY_LEVEL_CURRENT";
