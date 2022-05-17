@@ -15,47 +15,29 @@
       "hash": "6ec0ed8d6132a36eb99a7097d85702cc3c052ff4"
     },
     "com.google.external-dependency-manager": {
-      "version": "https://github.com/Gamee-Studio/external-dependency-manager.git?path=Assets/_Root#1.2.169",
+      "version": "https://github.com/Gamee-Studio/external-dependency-manager.git?path=Assets/_Root#1.2.170",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "8479d378666d8af0e30fc0308df447196857659d"
+      "hash": "09d1fac2d7e800b4ab06911a783e27928d90b3fb"
     },
     "com.google.firebase.analytics": {
-      "version": "https://github.com/Gamee-Studio/firebase-analytics.git?path=Assets/_Root#8.8.0",
+      "version": "https://github.com/Gamee-Studio/firebase-analytics.git?path=Assets/_Root#8.9.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.google.firebase.app": "8.8.0"
+        "com.google.firebase.app": "8.9.0"
       },
-      "hash": "9fe7fe406b42e5af3074cbf8203fa1024f9f4c90"
+      "hash": "00659c0e1a60785b46e067381fd3a88bbca564fb"
     },
     "com.google.firebase.app": {
-      "version": "https://github.com/Gamee-Studio/firebase-app.git?path=Assets/_Root#8.8.0",
+      "version": "https://github.com/Gamee-Studio/firebase-app.git?path=Assets/_Root#8.9.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.google.external-dependency-manager": "1.2.169"
+        "com.google.external-dependency-manager": "1.2.170"
       },
-      "hash": "7758cf22abe9eda90e14e6dffa4d87fd70bda2bd"
-    },
-    "com.google.firebase.auth": {
-      "version": "https://github.com/Gamee-Studio/firebase-auth.git?path=Assets/_Root#8.8.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.google.firebase.app": "8.8.0"
-      },
-      "hash": "66dc8fab7a11e6869361610c7503c2e26c57827c"
-    },
-    "com.google.firebase.database": {
-      "version": "https://github.com/Gamee-Studio/firebase-database.git?path=Assets/_Root#8.8.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.google.firebase.auth": "8.8.0"
-      },
-      "hash": "39ccab5e40c39a3d63b249975b4fb012a92ce32b"
+      "hash": "a009cf801b1ec16d8801845347eb27071d32f1be"
     },
     "com.google.firebase.messaging": {
       "version": "https://github.com/snorluxe/firebase-messaging.git?path=Assets/_Root#8.8.0",
@@ -67,22 +49,13 @@
       "hash": "e70094b630f35da455d275a48a1335ee415c1e78"
     },
     "com.google.firebase.remote-config": {
-      "version": "https://github.com/Gamee-Studio/firebase-remote-config.git?path=Assets/_Root#8.8.0",
+      "version": "https://github.com/Gamee-Studio/firebase-remote-config.git?path=Assets/_Root#8.9.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.google.firebase.app": "8.8.0"
+        "com.google.firebase.app": "8.9.0"
       },
-      "hash": "3dff2974b7b06e7a0c75a82368b4b70616e17b7e"
-    },
-    "com.lance.local-notification": {
-      "version": "https://github.com/yenmoc/local-notification.git?path=Assets/_Root",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.mobile.notifications": "1.4.2"
-      },
-      "hash": "3e1dc33852ccca02a1ab1e381510b6a6dd726c67"
+      "hash": "d56b981becedbcf6a9d896316c03b81572e1452b"
     },
     "com.neuecc.unirx": {
       "version": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
@@ -91,12 +64,28 @@
       "dependencies": {},
       "hash": "284d5c50d3f1ddd9fa7df3d382ea904732a9c2ff"
     },
+    "com.snorlax.common": {
+      "version": "https://github.com/snorluxe/common.git?path=Assets/_Root#1.0.11",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9718371dde329772afdaebdf25ef6d15daffab8f"
+    },
+    "com.snorlax.local-notification": {
+      "version": "https://github.com/snorluxe/local-notification.git?path=Assets/_Root#2022.2.17",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.mobile.notifications": "1.4.2"
+      },
+      "hash": "4d10581cd1df34be625444c447f9b61a43b6fa73"
+    },
     "com.unity.2d.animation": {
-      "version": "5.0.4",
+      "version": "5.0.10",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.2d.common": "4.0.3",
+        "com.unity.2d.common": "4.0.4",
         "com.unity.mathematics": "1.1.0",
         "com.unity.2d.sprite": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
@@ -105,7 +94,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.common": {
-      "version": "4.0.3",
+      "version": "4.0.4",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -115,7 +104,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.path": {
-      "version": "4.0.1",
+      "version": "4.0.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
@@ -128,17 +117,6 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.2d.psdimporter": {
-      "version": "4.0.2",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.2d.common": "4.0.2",
-        "com.unity.2d.animation": "5.0.2",
-        "com.unity.2d.sprite": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -146,13 +124,13 @@
       "dependencies": {}
     },
     "com.unity.2d.spriteshape": {
-      "version": "5.1.1",
+      "version": "5.1.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.1.0",
-        "com.unity.2d.common": "4.0.3",
-        "com.unity.2d.path": "4.0.1",
+        "com.unity.2d.common": "4.0.4",
+        "com.unity.2d.path": "4.0.2",
         "com.unity.modules.physics2d": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -177,6 +155,15 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.ads": {
+      "version": "3.7.5",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.analytics": {
       "version": "3.6.12",
       "depth": 0,
@@ -187,10 +174,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "1.3.9",
+      "version": "1.15.13",
       "depth": 0,
       "source": "registry",
-      "dependencies": {},
+      "dependencies": {
+        "com.unity.services.core": "1.0.1"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
@@ -210,7 +199,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.12",
+      "version": "2.0.14",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -219,7 +208,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
-      "version": "1.2.4",
+      "version": "1.2.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -251,7 +240,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.purchasing": {
-      "version": "4.1.1",
+      "version": "4.1.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -281,7 +270,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.29",
+      "version": "1.1.31",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -292,7 +281,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {
-      "version": "3.0.1",
+      "version": "3.0.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -301,7 +290,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.4.7",
+      "version": "1.4.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -322,7 +311,7 @@
       }
     },
     "com.unity.xr.legacyinputhelpers": {
-      "version": "2.1.8",
+      "version": "2.1.9",
       "depth": 0,
       "source": "registry",
       "dependencies": {
