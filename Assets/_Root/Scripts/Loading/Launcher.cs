@@ -5,27 +5,28 @@ using DG.Tweening;
 using UniRx;
 using System;
 using static Gamee_Hiukka.Control.Gamemanager;
+using UnityEngine.AddressableAssets;
 
-namespace Gamee_Hiukka.Control 
+namespace Gamee_Hiukka.Control
 {
     public class Launcher : MonoBehaviour
     {
         [SerializeField] private FirebaseApp firebaseApp;
         public bool IsLoadDataComplete { set; get; } = false;
 
-        public async void LoadData() 
+        public async void LoadData()
         {
             IsLoadDataComplete = false;
 
             firebaseApp.Init();
-            Vibration.Init();
             GameData.CheckNewDay();
 
-            SkinResources.Instance.LoadDataAsset();
             DataController.LoadLevelCurrent();
             DataController.LoadCoinCurrent();
             DataController.LoadLevelIndexCurrent();
+            DataController.LoadLevelCollectionIndexCurrent();
             DataController.LoadLevelList();
+            DataController.LoadLevelCollectionList();
             DataController.LoadIsProcessFull();
             DataController.LoadIDSKinCurrent();
             DataController.LoadSKinUnlockCount();
@@ -43,23 +44,21 @@ namespace Gamee_Hiukka.Control
             DataController.LoadUnlockAllSkin();
             DataController.LoadCoinX2();
 
+            SkinResources.Instance.LoadDataAsset();
+
             if (DataParam.coinX2) DataParam.coinX2Value = 2;
             else DataParam.coinX2Value = 1;
 
-            if (GameData.LevelIndexCurrent >= Config.LevelMax)
-            {
-                Util.Shuffle(GameData.LevelList);
-                GameData.LevelIndexCurrent = 0;
-                DataController.SaveLevelList();
-                DataController.SaveLevelIndexCurrent();
-            }
-            GameData.LevelCurrentObj = await BridgeData.GetLevel(GameData.LevelList[GameData.LevelIndexCurrent]);
+            Addressables.InitializeAsync();
+            BridgeData.CheckLoopLevel();
+            if (Config.IsLevelCollection) GameData.LevelCurrentObj = await BridgeData.GetLevelCollection(GameData.LevelCollectionList[GameData.LevelCollectionIndexCurrent]);
+            else GameData.LevelCurrentObj = await BridgeData.GetLevel(GameData.LevelList[GameData.LevelIndexCurrent]);
             await LoadFileData();
 
             IsLoadDataComplete = true;
         }
 
-        public async UniTask LoadFileData() 
+        public async UniTask LoadFileData()
         {
             await UniTask.Run(() =>
             {

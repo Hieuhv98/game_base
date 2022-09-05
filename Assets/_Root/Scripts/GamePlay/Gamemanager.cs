@@ -7,14 +7,16 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Scripting;
 
 namespace Gamee_Hiukka.Control
 {
     public class Gamemanager : Singleton<Gamemanager>
     {
-        public InputManager inputManager;
         public GamePlayController gamePlayController;
         [SerializeField] CamFollow cameraFollow;
+        [SerializeField] Camera cameraUI;
+        [SerializeField] GameObject objFollow;
         public Transform levelTransform;
 
         [SerializeField] EGameState state;
@@ -29,6 +31,9 @@ namespace Gamee_Hiukka.Control
         public PlayerController Player { private set; get; }
         public LevelMap LevelMapCurrent => _levelMapCurrent;
         public CamFollow CameraFollow { set => cameraFollow = value; get => cameraFollow; }
+        public Camera CameraMain => cameraMain;
+        public Camera CameraUI => cameraUI;
+        public GamePlayController GamePlayController => gamePlayController;
 
         [SerializeField] private GameObject effect;
         [SerializeField, Range(0, 5)] private float timeWinDelay = 2f;
@@ -37,6 +42,10 @@ namespace Gamee_Hiukka.Control
         private GameObject _levelLoad;
         private GameObject _levelCurrent;
         private LevelMap _levelMapCurrent;
+        private Camera cameraMain;
+        float offsetCameraHeight = .75f;
+        Sequence seqWin;
+        Sequence seqLose;
 
         private bool _isPreLevelWin = false;
 
@@ -47,7 +56,17 @@ namespace Gamee_Hiukka.Control
                 GameObject level = new GameObject("_Level");
                 levelTransform = level.transform;
             }
-        }
+            if(objFollow == null) objFollow = new GameObject("Obj Follow");
+            cameraMain = cameraFollow.GetComponentInChildren<Camera>();
+
+            if (!GameData.IsStart)
+            {
+                GameData.IsStart = true;
+                Config.TimeAtInterstitialAdShow = DateTime.Now;
+                Config.TimeAtInterstitialAdLoseShow = DateTime.Now;
+            }
+            _isPreLevelWin = true;
+    }
 
         private void Start()
         {
@@ -60,28 +79,16 @@ namespace Gamee_Hiukka.Control
         {
             eGameLoadData = EGameLoadData.GAME_DATA_LOADING;
 
-            if (GameData.LevelIndexCurrent >= Config.LevelMax - GameData.LevelStartLoop + 1)
-            {
-                if (GameData.LevelStartLoop != Config.LevelStartLoop)
-                {
-                    GameData.LevelStartLoop = Config.LevelStartLoop;
-                    List<int> temp = new List<int>();
-                    for (int i = GameData.LevelStartLoop; i <= Config.LevelMax; i++)
-                    {
-                        temp.Add(i);
-                    }
-                    GameData.LevelList = temp;
-                }
-
-                Util.Shuffle(GameData.LevelList);
-                GameData.LevelIndexCurrent = 0;
-                DataController.SaveLevelList();
-                DataController.SaveLevelIndexCurrent();
-            }
+            BridgeData.CheckLoopLevel();
 
             if (_levelLoad != null || GameData.LevelCurrentObj == null)
             {
-                _levelLoad = await BridgeData.GetLevel(GameData.LevelList[GameData.LevelIndexCurrent]);
+                if (GameData.LevelList == null) DataController.LoadLevelList();
+                if (GameData.LevelCollectionList == null) DataController.LoadLevelCollectionList();
+
+                if (Config.IsLevelCollection) _levelLoad = await BridgeData.GetLevelCollection(GameData.LevelCollectionList[GameData.LevelCollectionIndexCurrent]);
+                else _levelLoad = await BridgeData.GetLevel(GameData.LevelList[GameData.LevelIndexCurrent]);
+
                 GameData.LevelCurrentObj = _levelLoad;
 
             }
@@ -93,22 +100,57 @@ namespace Gamee_Hiukka.Control
 
         private void ShowLevelMap()
         {
-            MyAnalytic.LogEvent(MyAnalytic.LEVEL_START, MyAnalytic.LEVEL_START, "level_" + GameData.LevelList[GameData.LevelIndexCurrent] + "-" + "level_" + GameData.LevelCurrent.ToString());
-            LogEventLevel();
+            if (Config.IsLevelCollection) 
+            {
+                MyAnalytic.LogEvent(MyAnalytic.LEVEL_START, MyAnalytic.LEVEL_START, "levelCollection_" + GameData.LevelCollectionList[GameData.LevelCollectionIndexCurrent] + "-" + "level_" + GameData.LevelCurrent.ToString());
+                var level = "levelCollection_" + GameData.LevelCollectionList[GameData.LevelCollectionIndexCurrent];
+                if (!DataController.LoadDataByID(level))
+                {
+                    MyAnalytic.LogEvent(MyAnalytic.LEVEL_FIRST_START, MyAnalytic.LEVEL_FIRST_START, level);
+                    DataController.SaveDataByID(level, true);
+                }
+            }
+            else 
+            {
+                MyAnalytic.LogEvent(MyAnalytic.LEVEL_START, MyAnalytic.LEVEL_START, "level_" + GameData.LevelList[GameData.LevelIndexCurrent] + "-" + "level_" + GameData.LevelCurrent.ToString());
+                var level = "level_" + GameData.LevelList[GameData.LevelIndexCurrent];
+                if (!DataController.LoadDataByID(level))
+                {
+                    MyAnalytic.LogEvent(MyAnalytic.LEVEL_FIRST_START, MyAnalytic.LEVEL_FIRST_START, level);
+                    DataController.SaveDataByID(level, true);
+                }
+            }
 
-            gamePlayController.UpdateLevelText();
+            //LogEventLevel();
+
+            gamePlayController.DefautUI();
             gamePlayController.UpdateBG();
             gamePlayController.UIDefaut();
             CameraDefaut();
+            PoolManager.ReleaseObjectAll();
+            //TutorialManager.Instance.Defaut();
 
-            if (_levelCurrent != null) DestroyLevelMap();
 
-            StartCoroutine(WaitForShowLevelMap());
+            //StartCoroutine(WaitForShowLevelMap());
             gamePlayController.ShowAdsBanner();
 
             effect.SetActive(false);
 
-            if (IsShowInter) gamePlayController.ShowAdsInterstitial();
+            if (IsShowInter && !Config.IsShowInterAdsBeforeWin)
+            {
+                state = EGameState.GAME_PAUSE;
+                gamePlayController.ShowAdsInterstitial(() =>
+                {
+                    DOTween.Sequence().SetDelay(.05f).OnComplete(() =>
+                    {
+                        Config.TimeAtInterstitialAdShow = DateTime.Now;
+                        Config.TimeAtInterstitialAdLoseShow = DateTime.Now;
+                        state = EGameState.GAME_PLAYING;
+                        StartCoroutine(WaitForShowLevelMap());
+                    });
+                });
+            }
+            else StartCoroutine(WaitForShowLevelMap());
         }
 
         private IEnumerator WaitForShowLevelMap()
@@ -116,24 +158,41 @@ namespace Gamee_Hiukka.Control
             yield return new WaitUntil(() => eGameLoadData == EGameLoadData.GAME_DATA_READY);
             state = EGameState.GAME_START;
 
+            if (_levelCurrent != null) DestroyLevelMap();
             _levelCurrent = Instantiate(_levelLoad, levelTransform.transform);
+            _levelCurrent.gameObject.SetActive(false);
+
+            yield return new WaitUntil(() => _levelCurrent != null);
+            _levelCurrent.gameObject.SetActive(true);
+    
             _levelMapCurrent = _levelCurrent.GetComponent<LevelMap>();
             _levelMapCurrent.ActionLevelWin += GameWin;
             _levelMapCurrent.ActionLevelLose += GameLose;
             Player = _levelMapCurrent.Player;
-            gamePlayController.UpdateLevelTargetText(_levelMapCurrent.Type);
-            
-            state = EGameState.GAME_PLAYING;
+            GamePlay();
 
+            cameraFollow.SetTarget(objFollow);
+
+            //state = EGameState.GAME_PLAYING;
             //_levelCurrent.SetActive(true);
         }
-        private void DestroyLevelMap() { Destroy(_levelCurrent); }
+        private void DestroyLevelMap() { Destroy(_levelCurrent); levelTransform.Clear(); _levelCurrent = null; }
         #endregion
-
-        bool IsShowInter 
+        public void GamePlay() 
+        {
+            state = EGameState.GAME_PLAYING;
+        }
+        public bool IsShowInter 
         {
             get
             {
+                if(GameData.IsShowAds) 
+                {
+                    GameData.IsShowAds = false;
+                    return false;
+                }
+                if (!AdsManager.Instance.IsInterLoaded) return false;
+
                 bool isShowInter = false;
                 if (Config.InterstitialAdFirstShowCount <= GameData.LevelCurrent)
                 {
@@ -146,7 +205,7 @@ namespace Gamee_Hiukka.Control
                                 if ((DateTime.Now - Config.TimeAtInterstitialAdShow).TotalSeconds > Config.TimeInterAdShow)
                                 {
                                     Config.InterstitialAdCountCurrent = 1;
-                                    Config.TimeAtInterstitialAdShow = DateTime.Now;
+                                    //Config.TimeAtInterstitialAdShow = DateTime.Now;
                                     isShowInter = true;
                                     //gamePlayController.ShowAdsInterstitial();
                                 }
@@ -156,7 +215,7 @@ namespace Gamee_Hiukka.Control
                                 if ((DateTime.Now - Config.TimeAtInterstitialAdLoseShow).TotalSeconds > Config.TimeInterAdShowLose)
                                 {
                                     Config.InterstitialAdCountCurrent = 1;
-                                    Config.TimeAtInterstitialAdLoseShow = DateTime.Now;
+                                    //Config.TimeAtInterstitialAdLoseShow = DateTime.Now;
                                     isShowInter = true;
                                     //gamePlayController.ShowAdsInterstitial();
                                 }
@@ -180,83 +239,141 @@ namespace Gamee_Hiukka.Control
         #region game
         public void GameWin(EWinType type = EWinType.WIN_NORMAL)
         {
-            if (state == EGameState.GAME_ENDING) return;
-            _isPreLevelWin = false;
+            if (state == EGameState.GAME_ENDING || state == EGameState.GAME_LOSE) return;
+            _isPreLevelWin = true;
+
             gamePlayController.UIMove();
 
-            MyAnalytic.LogEvent(MyAnalytic.LEVEL_COMPLETE, MyAnalytic.LEVEL_COMPLETE, "level_" + GameData.LevelList[GameData.LevelIndexCurrent].ToString() + "-" + "level_" + GameData.LevelCurrent.ToString());
+            if(Config.IsLevelCollection) MyAnalytic.LogEvent(MyAnalytic.LEVEL_COMPLETE, MyAnalytic.LEVEL_COMPLETE, "levelCollection_" + GameData.LevelCollectionList[GameData.LevelCollectionIndexCurrent].ToString() + "-" + "level_" + GameData.LevelCurrent.ToString());
+            else MyAnalytic.LogEvent(MyAnalytic.LEVEL_COMPLETE, MyAnalytic.LEVEL_COMPLETE, "level_" + GameData.LevelList[GameData.LevelIndexCurrent].ToString() + "-" + "level_" + GameData.LevelCurrent.ToString());
             state = EGameState.GAME_ENDING;
             gamePlayController.HideAdsBanner();
             effect.transform.position = Player.transform.position + Vector3.up * 2.5f;
             effect.SetActive(true);
-            AudioManager.Instance.PlayAudioPlayerDone();
 
             if (!Config.IsTest)
             {
+                if (Config.IsLevelCollection) 
+                {
+                    GameData.LevelCollectionIndexCurrent++;
+                    DataController.SaveLevelCollectionIndexCurrent();
+                }
+                else 
+                {
+                    GameData.LevelIndexCurrent++;
+                    DataController.SaveLevelIndexCurrent();
+                }
                 GameData.LevelCurrent++;
-                GameData.LevelIndexCurrent++;
                 Config.InterstitialAdCountCurrent++;
                 DataController.SaveLevelCurrent();
-                DataController.SaveLevelIndexCurrent();
             }
 
-            if (GameData.LevelIndexCurrent < Config.LevelMax) LoadLevelMap();
-
-            DOTween.Sequence().SetDelay(timeWinDelay).OnComplete(() =>
+            LoadLevelMap();
+            var timeDelay = timeWinDelay;
+            seqWin = DOTween.Sequence().SetDelay(timeDelay).OnComplete(() =>
             {
-                if (state == EGameState.GAME_LOSE) return;
-                
-                state = EGameState.GAME_WIN;
-                gamePlayController.ShowPopupWin(type);
+                if (!this.gameObject.activeInHierarchy) return;
+                if (!Config.IsShowInterAdsBeforeWin)
+                {
+                    if (state == EGameState.GAME_LOSE) return;
+                    GameData.ProcessCount++;
+
+                    state = EGameState.GAME_WIN;
+                    gamePlayController.ShowPopupWin(type);
+                }
+                else
+                {
+                    if (IsShowInter)
+                    {
+                        var stateCache = state;
+                        state = EGameState.GAME_PAUSE;
+                        gamePlayController.ShowAdsInterstitial(() =>
+                        {
+                            DOTween.Sequence().SetDelay(.05f).OnComplete(() =>
+                            {
+                                GameData.ProcessCount++;
+                                Config.TimeAtInterstitialAdShow = DateTime.Now;
+                                Config.TimeAtInterstitialAdLoseShow = DateTime.Now;
+                                state = EGameState.GAME_WIN;
+                                gamePlayController.ShowPopupWin(type);
+                            });
+                        });
+                    }
+                    else
+                    {
+                        if (state == EGameState.GAME_LOSE) return;
+                        GameData.ProcessCount++;
+
+                        state = EGameState.GAME_WIN;
+                        gamePlayController.ShowPopupWin(type);
+                    }
+                }
             });
         }
         public void GameLose()
         {
             if (state == EGameState.GAME_ENDING) return;
+            state = EGameState.GAME_ENDING;
+            state = EGameState.GAME_LOSE;
+
             _isPreLevelWin = false;
             if(Config.IsShowInterAdsLose) Config.InterstitialAdCountCurrent++;
 
             gamePlayController.UIMove();
 
-            MyAnalytic.LogEvent(MyAnalytic.LEVEL_FAILED, MyAnalytic.LEVEL_FAILED, "level_" + GameData.LevelList[GameData.LevelIndexCurrent] + "-" + "level_" + GameData.LevelCurrent.ToString());
-            state = EGameState.GAME_ENDING;
+            if(Config.IsLevelCollection) MyAnalytic.LogEvent(MyAnalytic.LEVEL_FAILED, MyAnalytic.LEVEL_FAILED, "levelCollection_" + GameData.LevelCollectionList[GameData.LevelCollectionIndexCurrent] + "-" + "level_" + GameData.LevelCurrent.ToString());
+            else MyAnalytic.LogEvent(MyAnalytic.LEVEL_FAILED, MyAnalytic.LEVEL_FAILED, "level_" + GameData.LevelList[GameData.LevelIndexCurrent] + "-" + "level_" + GameData.LevelCurrent.ToString());
             gamePlayController.HideAdsBanner();
             LoadLevelMap();
 
-            DOTween.Sequence().SetDelay(timeLoseDelay).OnComplete(() =>
+            seqLose = DOTween.Sequence().SetDelay(timeLoseDelay).OnComplete(() =>
             {
                 if (state == EGameState.GAME_WIN) return;
 
-                state = EGameState.GAME_LOSE;
+                //state = EGameState.GAME_LOSE;
                 gamePlayController.ShowPopupLose();
             });
         }
 
         public void GameNextLevel()
         {
-            if (GameData.LevelIndexCurrent >= Config.LevelMax) LoadLevelMap();
+            LoadLevelMap();
 
             ShowLevelMap();
+#if (!UNITY_EDITOR)
+            GarbageCollector.GCMode = GarbageCollector.Mode.Enabled;
+#endif
         }
         public void GameReplayLevel()
         {
             if (state == EGameState.GAME_ENDING) return;
             if (state == EGameState.GAME_PLAYING || state == EGameState.GAME_LOSE)
             {
-                MyAnalytic.LogEvent(MyAnalytic.LEVEL_REPLAY, MyAnalytic.LEVEL_REPLAY, "level_" + GameData.LevelList[GameData.LevelIndexCurrent] + "-" + "level_" + GameData.LevelCurrent.ToString());
+                if(Config.IsLevelCollection) MyAnalytic.LogEvent(MyAnalytic.LEVEL_REPLAY, MyAnalytic.LEVEL_REPLAY, "levelCollection_" + GameData.LevelCollectionList[GameData.LevelCollectionIndexCurrent] + "-" + "level_" + GameData.LevelCurrent.ToString());
+                else MyAnalytic.LogEvent(MyAnalytic.LEVEL_REPLAY, MyAnalytic.LEVEL_REPLAY, "level_" + GameData.LevelList[GameData.LevelIndexCurrent] + "-" + "level_" + GameData.LevelCurrent.ToString());
 
                 gamePlayController.HideAdsBanner();
                 ShowLevelMap();
             }
             else if (state == EGameState.GAME_WIN)
             {
-                MyAnalytic.LogEvent(MyAnalytic.LEVEL_REPLAY, MyAnalytic.LEVEL_REPLAY, "level_" + GameData.LevelList[GameData.LevelIndexCurrent - 1] + "-" + "level_" + (GameData.LevelCurrent - 1).ToString());
+                if(Config.IsLevelCollection) MyAnalytic.LogEvent(MyAnalytic.LEVEL_REPLAY, MyAnalytic.LEVEL_REPLAY, "levelCollection_" + GameData.LevelCollectionList[GameData.LevelCollectionIndexCurrent - 1] + "-" + "level_" + (GameData.LevelCurrent - 1).ToString());
+                else MyAnalytic.LogEvent(MyAnalytic.LEVEL_REPLAY, MyAnalytic.LEVEL_REPLAY, "level_" + GameData.LevelList[GameData.LevelIndexCurrent - 1] + "-" + "level_" + (GameData.LevelCurrent - 1).ToString());
                 if (!Config.IsTest)
                 {
+                    if (Config.IsLevelCollection) 
+                    {
+                        GameData.LevelCollectionIndexCurrent--;
+                        DataController.SaveLevelCollectionIndexCurrent();
+                    }
+                    else 
+                    {
+                        GameData.LevelIndexCurrent--;
+                        DataController.SaveLevelIndexCurrent();
+                    }
+
                     GameData.LevelCurrent--;
-                    GameData.LevelIndexCurrent--;
                     DataController.SaveLevelCurrent();
-                    DataController.SaveLevelIndexCurrent();
                 }
 
                 LoadLevelMap();
@@ -266,43 +383,30 @@ namespace Gamee_Hiukka.Control
 
         public void GameSkipLevel()
         {
-            if (state == EGameState.GAME_ENDING) return;
-            MyAnalytic.LogEvent(MyAnalytic.LEVEL_SKIP, MyAnalytic.LEVEL_SKIP, "level_" + GameData.LevelList[GameData.LevelIndexCurrent] + "-" + "level_" + GameData.LevelCurrent.ToString());
-
-#if UNITY_EDITOR
-            gamePlayController.HideAdsBanner();
+            if (state == EGameState.GAME_ENDING || state == EGameState.GAME_TUTORIAL) return;
+            if(Config.IsLevelCollection) MyAnalytic.LogEvent(MyAnalytic.LEVEL_SKIP, MyAnalytic.LEVEL_SKIP, "levelCollection_" + GameData.LevelCollectionList[GameData.LevelCollectionIndexCurrent] + "-" + "level_" + GameData.LevelCurrent.ToString());
+            else MyAnalytic.LogEvent(MyAnalytic.LEVEL_SKIP, MyAnalytic.LEVEL_SKIP, "level_" + GameData.LevelList[GameData.LevelIndexCurrent] + "-" + "level_" + GameData.LevelCurrent.ToString());
 
             if (!Config.IsTest)
             {
+                if (Config.IsLevelCollection)
+                {
+                    GameData.LevelCollectionIndexCurrent++;
+                    DataController.SaveLevelCollectionIndexCurrent();
+                }
+                else
+                {
+                    GameData.LevelIndexCurrent++;
+                    DataController.SaveLevelIndexCurrent();
+                }
+
                 GameData.LevelCurrent++;
-                GameData.LevelIndexCurrent++;
+                Config.InterstitialAdCountCurrent++;
                 DataController.SaveLevelCurrent();
-                DataController.SaveLevelIndexCurrent();
             }
 
             LoadLevelMap();
             ShowLevelMap();
-
-#elif UNITY_ANDROID || UNITY_IOS
-            gamePlayController.ShowAdsRewared((isWatched) =>
-            {
-                if (isWatched)
-                {
-                    gamePlayController.HideAdsBanner();
-
-                    if (!Config.IsTest)
-                    {
-                        GameData.LevelCurrent++;
-                        GameData.LevelIndexCurrent++;
-                        DataController.SaveLevelCurrent();
-                        DataController.SaveLevelIndexCurrent();
-                    }
-
-                    LoadLevelMap();
-                    ShowLevelMap();
-                }
-            });
-#endif
         }
 
         public void GameSubmit()
@@ -319,10 +423,15 @@ namespace Gamee_Hiukka.Control
             {
             }
         }
+        public void GameKill() 
+        {
+            if (seqWin != null) seqWin.Kill();
+            if (seqLose != null) seqLose.Kill();
+        }
 
         public void CameraRoom(GameObject popup) 
         {
-            cameraFollow.StartRoom(Player.gameObject, popup);
+            cameraFollow.StartRoom(objFollow, popup);
         }
 
         public void CameraDefaut() 
@@ -330,69 +439,17 @@ namespace Gamee_Hiukka.Control
             CameraFollow.Defaut();
         }
 
-        #endregion
-
-        #region log adjust event
-        void LogEventLevel() 
+        public void UpdateTartgetText(ELevelTargetType type) 
         {
-            switch (GameData.LevelCurrent) 
-            {
-                case 1:
-                    AdjustLog.AdjustLogEventPlayLevel1();
-                    break;
-                case 2:
-                    AdjustLog.AdjustLogEventPlayLevel2();
-                    break;
-                case 3:
-                    AdjustLog.AdjustLogEventPlayLevel3();
-                    break;
-                case 4:
-                    AdjustLog.AdjustLogEventPlayLevel4();
-                    break;
-                case 5:
-                    AdjustLog.AdjustLogEventPlayLevel5();
-                    break;
-                case 6:
-                    AdjustLog.AdjustLogEventPlayLevel6();
-                    break;
-                case 7:
-                    AdjustLog.AdjustLogEventPlayLevel7();
-                    break;
-                case 8:
-                    AdjustLog.AdjustLogEventPlayLevel8();
-                    break;
-                case 9:
-                    AdjustLog.AdjustLogEventPlayLevel9();
-                    break;
-                case 10:
-                    AdjustLog.AdjustLogEventPlayLevel10();
-                    break;
-                case 15:
-                    AdjustLog.AdjustLogEventPlayLevel15();
-                    break;
-                case 20:
-                    AdjustLog.AdjustLogEventPlayLevel20();
-                    break;
-                case 25:
-                    AdjustLog.AdjustLogEventPlayLevel25();
-                    break;
-                case 30:
-                    AdjustLog.AdjustLogEventPlayLevel30();
-                    break;
-                case 35:
-                    AdjustLog.AdjustLogEventPlayLevel35();
-                    break;
-                case 40:
-                    AdjustLog.AdjustLogEventPlayLevel40();
-                    break;
-                case 45:
-                    AdjustLog.AdjustLogEventPlayLevel45();
-                    break;
-                case 50:
-                    AdjustLog.AdjustLogEventPlayLevel50();
-                    break;
-            }
+            gamePlayController.UpdateLevelTargetText(type);
         }
+
+        private void OnDisable()
+        {
+            GameKill();
+        }
+        #endregion
+        #region event
         #endregion
     }
 }

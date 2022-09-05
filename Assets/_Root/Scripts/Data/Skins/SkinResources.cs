@@ -23,7 +23,26 @@ public class SkinResources : ScriptableObject
     {
         return skins;
     }
+    public bool CanBuySkin
+    {
+        get
+        {
+            bool canBuy = false;
 
+            foreach (var skin in skins)
+            {
+                if (skin.IsBuyCoin && !skin.IsHas)
+                {
+                    if (skin.Coin <= GameData.CoinCurrent)
+                    {
+                        canBuy = true;
+                        break;
+                    }
+                }
+            }
+            return canBuy;
+        }
+    }
     public SkinData GetSkinCurrent()
     {
         string id = GameData.IDSkinCurrent;

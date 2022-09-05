@@ -13,6 +13,8 @@ namespace Gamee_Hiukka.Control
         [SerializeField] AdmobManager admobManager;
         [SerializeField] ApplovinManager applovinManager;
 
+        public bool IsLoaded => Config.IsAdmob ? admobManager.IsLoadedReward : applovinManager.IsRewardedReady();
+        public bool IsInterLoaded => Config.IsAdmob ? admobManager.IsLoadedInterstitial : applovinManager.IsInterReady();
         public void InitAds() 
         {
             if (Config.IsAdmob) admobManager.Init();
@@ -27,31 +29,43 @@ namespace Gamee_Hiukka.Control
 
             if (Config.IsAdmob) 
             {
+                if (admobManager == null) return;
                 if (admobManager.IsLoadedBanner) 
                 {
                     admobManager.ShowBannerAD();
                 }
             }
-            else { applovinManager.ShowBanner(); };
+            else 
+            {
+                if (applovinManager == null) return;
+                applovinManager.ShowBanner();
+            };
         }
-        public void ShowAdsInterstitial()
+        public void ShowAdsInterstitial(Action actionCompleted = null)
         {
             if (DataParam.removeAds) return;
             MyAnalytic.LogEvent(MyAnalytic.AD_CLICK);
             if (Config.IsAdmob) 
             {
+                if (admobManager == null) return;
                 if (admobManager.IsLoadedInterstitial) 
                 {
-                    admobManager.ShowInterstitialAD(null);
+                    admobManager.ShowInterstitialAD(actionCompleted);
                 }
             }
-            else { applovinManager.ShowIntertitial(null); }
+            else 
+            {
+                if (applovinManager == null) return;
+                applovinManager.ShowIntertitial(actionCompleted);
+            }
         }
         public void ShowAdsRewared(Action<bool> actionCloseRewardedAd) 
         {
             MyAnalytic.LogEvent(MyAnalytic.AD_CLICK);
+            MyAnalytic.LogEvent(MyAnalytic.AD_REWARD_REQUEST);
             if (Config.IsAdmob)
             {
+                if (admobManager == null) return;
                 if (admobManager.IsLoadedReward) 
                 {
                     admobManager.ShowRewardedAD(actionCloseRewardedAd);
@@ -59,6 +73,7 @@ namespace Gamee_Hiukka.Control
             }
             else
             {
+                if (applovinManager == null) return;
                 applovinManager.ShowReward(actionCloseRewardedAd);
             };
         }
@@ -68,9 +83,14 @@ namespace Gamee_Hiukka.Control
         {
             if (Config.IsAdmob)
             {
+                if (admobManager == null) return;
                 admobManager.HideBannerViewAd();
             }
-            else { applovinManager.HideBanner(); };
+            else 
+            {
+                if (applovinManager == null) return;
+                applovinManager.HideBanner();
+            };
         }
     }
 }

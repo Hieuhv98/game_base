@@ -418,8 +418,7 @@ public class MaxSdkUnityEditor : MaxSdkBase
             GameObject stubBanner;
             if (StubBanners.TryGetValue(adUnitIdentifier, out stubBanner))
             {
-                if (stubBanner != null)
-                    stubBanner.SetActive(true);
+                stubBanner.SetActive(true);
             }
         }
     }
@@ -452,8 +451,7 @@ public class MaxSdkUnityEditor : MaxSdkBase
         GameObject stubBanner;
         if (StubBanners.TryGetValue(adUnitIdentifier, out stubBanner))
         {
-            if (stubBanner != null)
-                stubBanner.SetActive(false);
+            stubBanner.SetActive(false);
         }
     }
 
@@ -1328,8 +1326,6 @@ public class MaxSdkUnityEditor : MaxSdkBase
     internal static void SetTargetingDataEmail(string email) { }
 
     internal static void SetTargetingDataPhoneNumber(string phoneNumber) { }
-
-    internal static void SetTargetingDataZipCode(string zipCode) { }
 
     internal static void SetTargetingDataKeywords(string[] keywords) { }
 

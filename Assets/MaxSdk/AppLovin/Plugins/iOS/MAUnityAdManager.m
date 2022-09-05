@@ -5,7 +5,7 @@
 
 #import "MAUnityAdManager.h"
 
-#define VERSION @"5.3.0"
+#define VERSION @"5.4.6"
 
 #define KEY_WINDOW [UIApplication sharedApplication].keyWindow
 #define DEVICE_SPECIFIC_ADVIEW_AD_FORMAT ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) ? MAAdFormat.leader : MAAdFormat.banner
@@ -521,7 +521,8 @@ static ALUnityBackgroundCallback backgroundCallback;
              @"placement" : ad.placement ?: @"",
              @"revenue" : [@(ad.revenue) stringValue],
              @"revenuePrecision" : ad.revenuePrecision,
-             @"waterfallInfo" : [self createAdWaterfallInfo: ad.waterfall]};
+             @"waterfallInfo" : [self createAdWaterfallInfo: ad.waterfall],
+             @"dspName" : ad.DSPName ?: @""};
 }
 
 #pragma mark - Waterfall Information
@@ -803,6 +804,8 @@ static ALUnityBackgroundCallback backgroundCallback;
     NSMutableDictionary<NSString *, id> *args = [self defaultAdEventParametersForName: name withAd: ad];
     args[@"errorCode"] = [@(error.code) stringValue];
     args[@"errorMessage"] = error.message;
+    args[@"mediatedNetworkErrorCode"] = [@(error.mediatedNetworkErrorCode) stringValue];
+    args[@"mediatedNetworkErrorMessage"] = error.mediatedNetworkErrorMessage;
     args[@"waterfallInfo"] = [self createAdWaterfallInfo: error.waterfall];
     [MAUnityAdManager forwardUnityEventWithArgs: args];
 }

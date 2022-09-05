@@ -269,6 +269,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -300,9 +302,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -1614,6 +1619,67 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      gameplay_wall_8: 5236246382842222162
+      gameplay_bomb: -2489937215424122546
+      gameplay_wall_15: 1610082711600298267
+      gameplay_hero_complete: 3694296716327339777
+      gameplay_wall_6: -4051517013121839587
+      gameplay_move_bar: 4627095044289205312
+      gameplay_trap_2: 774845637383735506
+      gameplay_wall_roof2: -1387402184553505817
+      gameplay_wall_11: 131423197286524527
+      gameplay_trap_1: 6555946709250183582
+      gameplay_wolfmeat: 3542815638249051273
+      gameplay_wall_5: -4598423778882022458
+      gameplay_gold6: 6605480887763442536
+      gameplay_lever_handle: 4108603238189943510
+      gameplay_fragment_5: 7332754067016194611
+      gameplay_wall_14: -2504429711810584895
+      gameplay_mine_item: -6401560147667047527
+      gameplay_wall_7: 5981160326756433058
+      gameplay_gift_empty: -2811920717021794810
+      gameplay_quest_wife: -6850646254263174215
+      gameplay_gold5: -5630573959336616364
+      gameplay_stick: -4195151283991478911
+      gameplay_gift_progeress_foreground: 1109311379387859438
+      gameplay_trap_saw: 1323721062856159306
+      gameplay_wall_13: -3248123298999313683
+      gameplay_quest_chest: 3632344012840221444
+      gameplay_gold1: 6964323498459992282
+      gamepaly_stick_hold: 6334146921698249325
+      gameplay_hero_shadow: 5911861037869095449
+      gameplay_trap_stone: 1777029567996205395
+      gameplay_quest_item: -7788574250142158152
+      gameplay_wall_2: -7205560849131257179
+      gameplay_fragment_2: -1756073148745980784
+      gameplay_drop_texture: 1529636850500143494
+      gameplay_wall_12: -6220007433375860373
+      gameplay_lever_base: -1093082841246811442
+      gameplay_lava_Stone: -618339291235786752
+      gameplay_gift_complete: -8534692642914387450
+      gameplay_trap_stone_pillar: 8088405533356876187
+      gameplay_wall_1: -6615321221698393652
+      gameplay_trap_3: 7262708573991857912
+      gameplay_arrow: 7659553321655463741
+      gameplay_fragment_3: -7720869860752881236
+      gameplay_wall_9: 632960326687564290
+      gameplay_stick_dot: -3901237519242552281
+      gameplay_gold2: 7771886831230975270
+      gameplay_bullet: 1975461023634942777
+      gameplay_gold7: 7713954129234620261
+      gameplay_pin: -1803460949062995749
+      gameplay_quest_gold: 1707169624970362236
+      gameplay_fragment_4: -1351184982735953615
+      gameplay_quest_monster: 6745195257313764195
+      gameplay_wall_10: -7954952806960240147
+      gameplay_wall_4: 8233998881643576032
+      gameplay_ice_stone: 7746431794570762197
+      gameplay_fragment_!: -405836270141144158
+      gameplay_wall_3: -5601257448919563908
+      gameplay_gold4: 3703824552422062651
+      gameplay_gift_progressbar: 5909760791992350951
+      gameplay_gold3: -7369481776718342605
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

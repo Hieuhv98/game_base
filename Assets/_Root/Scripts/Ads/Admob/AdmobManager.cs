@@ -157,7 +157,7 @@ namespace Game_Base.Control
 
             AdRequest request = new AdRequest.Builder().Build();
             this.rewardedAd.LoadAd(request);
-            MyAnalytic.LogEvent(MyAnalytic.AD_REWARD_REQUEST);
+            //MyAnalytic.LogEvent(MyAnalytic.AD_REWARD_REQUEST);
         }
 
         private void InitRewardedInterstitialAd()
@@ -227,12 +227,8 @@ namespace Game_Base.Control
         public void HandleInterstitialADClose(object sender, EventArgs args)
         {
             //AdjustLog.AdjustLogEventAdsInterFL();
-
-            DOTween.Sequence().SetDelay(.5f).OnComplete(() =>
-            {
-                _actionCloseInterstitialAD?.Invoke();
-                this.InitInterstitialAD();
-            });
+            _actionCloseInterstitialAD?.Invoke();
+            this.InitInterstitialAD();
 
             MyAnalytic.LogEvent(MyAnalytic.AD_INTERSTITIAL_IMPRESSION);
 
@@ -240,18 +236,19 @@ namespace Game_Base.Control
 
         public void HandleRewardedAdClose(object sender, EventArgs args)
         {
-            this.InitRewarderdAD();
+            //this.InitRewarderdAD();
+
+            DOTween.Sequence().SetDelay(.15f).OnComplete(() =>
+            {
+                _actionCloseRewardedAd?.Invoke(isWatched);
+                this.InitRewarderdAD();
+            });
         }
         public void HandleUserEarnedReward(object sender, Reward args)
         {
             //AdjustLog.AdjustLogEventAdsRewardFL();
 
-            DOTween.Sequence().SetDelay(.5f).OnComplete(() =>
-            {
-                isWatched = true;
-                _actionCloseRewardedAd?.Invoke(true);
-                this.InitRewarderdAD();
-            });
+            isWatched = true;
             MyAnalytic.LogEvent(MyAnalytic.AD_REWARD_IMPRESSION);
         }
         private void HandleEarnedRewardIntertitial(Reward reward)

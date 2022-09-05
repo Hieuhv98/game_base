@@ -3,65 +3,75 @@ using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using Spine.Unity;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
-namespace Gamee_Hiukka.Component 
+namespace Gamee_Hiukka.Component
 {
-    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(SkeletonAnimation))]
     public class AnimatorComponent : MonoBehaviour
     {
-        Animator animator;
-        AnimationClip animatonClip;
         [SerializeField] bool isPlaying;
-        public bool IsPlaying => isPlaying;
 
         string animName;
+        SkeletonAnimation skeletonAnimation;
+        public bool IsPlaying => isPlaying;
+        public string AnimName => animName;
 
-        public void Start()
+        private Dictionary<string, Action> _cacheEvent = new Dictionary<string, Action>();
+
+        public void Awake()
         {
-            animator = GetComponent<Animator>();
-            //UpdateAnimation(Constant.ANIM_IDLE);
+            skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+            skeletonAnimation.AnimationState.Event += HandleAnimationStateEvent;
         }
 
-        public AnimationClip PlayAnimation(string animName, int layer = -1, float normalizedTime = 0.25f)
+        public void Initialize(bool reload = false)
+        {
+            skeletonAnimation.Initialize(reload);
+        }
+        public void AddAnimation(string animName, int index = 2)
+        {
+            skeletonAnimation.AnimationState.AddAnimation(index, animName, false, 0);
+        }
+        public async UniTask<Spine.TrackEntry> PlayAnimation(string animName, int index = 1, bool loop = false, float speed = 1f)
         {
             this.animName = animName;
-            //animator.Play(animName, layer, normalizedTime);
-            
-            animator.IsInTransition(layer);
-            animator.CrossFadeInFixedTime(animName, normalizedTime, layer);
-
-            animatonClip = animator.runtimeAnimatorController.animationClips.FirstOrDefault(_ => _.name == animName);
-            return animatonClip;
+            await UniTask.WaitUntil(() => skeletonAnimation.AnimationState != null);
+            skeletonAnimation.timeScale = speed;
+            return skeletonAnimation.AnimationState.SetAnimation(index, animName, loop);
         }
 
-        public void RegisterEvent(Action actionEvent = null) 
+        public void RegisterEvent(string eventName, Action actionEvent = null)
         {
-            if (animatonClip == null)
+            if (_cacheEvent.ContainsKey(eventName))
             {
-                StartCoroutine(WaitTimeEvent(0.5f, actionEvent));
-                return;
+                _cacheEvent[eventName] = actionEvent;
             }
-            AnimationEvent animationEvent = animatonClip.events[0];
-
-            if (animationEvent == null) return;
-            StartCoroutine(WaitTimeEvent(animationEvent.time, actionEvent));
+            else
+            {
+                _cacheEvent.Add(eventName, actionEvent);
+            }
         }
 
-        public void StopAnimation() 
+        private void HandleAnimationStateEvent(Spine.TrackEntry trackEntry, Spine.Event e)
         {
-            PlayAnimation(Constant.ANIM_EMPTY);
-        }
-        
-        public void SetBoolParameter(string par, bool value) 
-        {
-            animator.SetBool(par, value);
+            foreach (var item in _cacheEvent.ToList())
+            {
+                if (item.Key.Equals(e.Data.Name))
+                {
+                    item.Value?.Invoke();
+                }
+            }
         }
 
-        public void SetTriggerParameter(string par)
+        public void StopAnimation()
         {
-            animator.SetTrigger(par);
         }
-        IEnumerator WaitTimeEvent(float time, Action actionEvent) 
+
+        IEnumerator WaitTimeEvent(float time, Action actionEvent)
         {
             yield return new WaitForSeconds(time);
             actionEvent?.Invoke();

@@ -17,6 +17,11 @@ namespace Gamee_Hiukka.Other
         public Action ActionClose { set; get; }
         public Action ActionUpdate { set; get; }
 
+        private void Start()
+        {
+            _coinValue = GameData.CoinCurrent;
+            txtCoin.text = _coinValue.ToString();
+        }
         private void Update()
         {
             if (_coinValue != GameData.CoinCurrent)

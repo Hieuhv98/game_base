@@ -12,19 +12,35 @@ namespace Gamee_Hiukka.Data
     {
         #region ingame
         public static List<int> LevelList { set; get; } = null;
+        public static List<int> LevelCollectionList { set; get; } = null;
         public static int LevelCurrent { set; get; } = 1;
         public static int LevelIndexCurrent { set; get; } = 0;
-        public static string IDSkinCurrent { set; get; }
+        public static int LevelCollectionIndexCurrent { set; get; } = 0;
+        public static string IDSkinCurrent { set; get; } = "";
+        public static string IDPrincessSkinCurrent { set; get; }
         public static string IDSkinSelect { set; get; }
+        public static bool IsStart { set; get; } = false;
         public static int SkinUnlockCout { set; get; } = 0;
         public static List<Color> Colors = new List<Color>();
         public static List<Texture2D> Textures = new List<Texture2D>();
         public static SkinData SkinCache { set; get; } = new SkinData();
 
         public static bool IsProcessFull { set; get; } = false;
+        public static bool IsShowAds { set; get; } = false;
+        public static bool IsUIMoving { set; get; } = false;
         public static int CoinCurrent { set; get; } = 0;
-        public static string MaterialBonus { set; get; }
+        public static int LevelMax
+        {
+            get => PlayerPrefs.GetInt(DataKey.LEVEL_MAX, 1);
 
+            set => PlayerPrefs.SetInt(DataKey.LEVEL_MAX, value);
+        }
+        public static int LevelCollectionMax
+        {
+            get => PlayerPrefs.GetInt(DataKey.LEVEL_COLLISION_MAX, 1);
+
+            set => PlayerPrefs.SetInt(DataKey.LEVEL_COLLISION_MAX, value);
+        }
         public static int LevelStartLoop
         {
             get => PlayerPrefs.GetInt(DataKey.LEVEL_START_LOOP, 1);
@@ -42,6 +58,7 @@ namespace Gamee_Hiukka.Data
 
             set => PlayerPrefs.SetInt(DataKey.KEY_IS_NEW_GAME, value == false ? 0 : 1);
         }
+
         public static string VersionApp { set; get; }
         public static string DescritptionApp { set; get; }
         public static bool IsDontShowUpdate = false;
@@ -65,13 +82,38 @@ namespace Gamee_Hiukka.Data
                 return customID;
             }
         }
+        public static bool IsShowIntro
+        {
+            get => PlayerPrefs.GetInt(DataKey.KEY_IS_SHOW_INTRO, 0) == 0 ? false : true;
 
+            set => PlayerPrefs.SetInt(DataKey.KEY_IS_SHOW_INTRO, value == false ? 0 : 1);
+        }
+        public static int ProcessCount
+        {
+            get => PlayerPrefs.GetInt(DataKey.KEY_PROCESS_COUNT, 0);
+
+            set => PlayerPrefs.SetInt(DataKey.KEY_PROCESS_COUNT, value);
+        }
         public static bool IsShowRated 
         {
             get => PlayerPrefs.GetInt(DataKey.KEY_SHOW_RATED, 0) == 0 ? false : true;
 
             set => PlayerPrefs.SetInt(DataKey.KEY_SHOW_RATED, value == false ? 0 : 1);
         }
+        public static bool IsClickRated
+        {
+            get => PlayerPrefs.GetInt(DataKey.KEY_CLICK_RATED, 0) == 0 ? false : true;
+
+            set => PlayerPrefs.SetInt(DataKey.KEY_CLICK_RATED, value == false ? 0 : 1);
+        }
+        public static bool IsLoginFB
+        {
+            get => PlayerPrefs.GetInt(DataKey.KEY_IS_LOGIN_FB, 0) == 0 ? false : true;
+
+            set => PlayerPrefs.SetInt(DataKey.KEY_IS_LOGIN_FB, value == false ? 0 : 1);
+        }
+
+        public static bool IsShowDaily { set; get; } = false;
         #endregion
 
         #region setting

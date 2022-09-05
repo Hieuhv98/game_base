@@ -1060,11 +1060,6 @@ public class MaxSdkAndroid : MaxSdkBase
         MaxUnityPluginClass.CallStatic("setTargetingDataPhoneNumber", phoneNumber);
     }
 
-    internal static void SetTargetingDataZipCode(string zipCode)
-    {
-        MaxUnityPluginClass.CallStatic("setTargetingDataZipCode", zipCode);
-    }
-
     internal static void SetTargetingDataKeywords(string[] keywords)
     {
         // Wrap the string array in an object array, so the compiler does not split into multiple strings.

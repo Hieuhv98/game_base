@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Lance.Common.LocalNotification;
 using Gamee_Hiukka.Data;
 using System;
+using Notification;
 
 public class CustomNotiTime : MonoBehaviour
 {

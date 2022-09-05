@@ -18,30 +18,34 @@ public class PopupLogin : PopupBase
     [SerializeField] private GameObject txtError;
     [SerializeField] private CountrySelect contrySelect;
 
+    Action actionLogin;
     public void Start()
     {
         ifName.contentType = InputField.ContentType.Alphanumeric;
+        ifName.characterLimit = 14;
     }
 
-    public void Initialize() 
+    public void Initialize(Action actionClose)
     {
+        this.actionLogin = actionClose;
         contrySelect.Initialize();
 
         txtError.SetActive(false);
     }
 
-    public void Login() 
+    public void Login()
     {
         GameData.CountryCode = contrySelect.countryCodeSelect;
         DataController.SaveCountryCode();
-        if (!string.IsNullOrEmpty(txtEnterName.text)) 
+        if (!string.IsNullOrEmpty(txtEnterName.text))
         {
             GameData.UserName = txtEnterName.text;
             DataController.SaveUserName();
             Close();
+            actionLogin?.Invoke();
             GamePopup.Instance.ShowPopupRank();
         }
-        else 
+        else
         {
             txtError.SetActive(true);
         }

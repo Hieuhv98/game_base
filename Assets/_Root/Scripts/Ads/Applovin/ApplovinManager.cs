@@ -1,5 +1,6 @@
 ﻿using System;
 using com.adjust.sdk;
+using DG.Tweening;
 using Gamee_Hiukka.Control;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class ApplovinManager : MonoBehaviour
     private Action<bool> _acRewarded;
     private Action _acInter;
 
+    bool isWatched = false;
     public void InitAds()
     {
         MaxSdkCallbacks.OnSdkInitializedEvent += (MaxSdkBase.SdkConfiguration sdkConfiguration) =>
@@ -19,7 +21,7 @@ public class ApplovinManager : MonoBehaviour
             InitializeRewardedAds();
         };
 
-        MaxSdk.SetSdkKey("lQvyJfkm3Qv_slnGGmoRT3qODiEZz5n89Cwd1XRtTCRltRWdGeITcqSK5Pwqn0ScUnTia-Twq4Qhps7wD8zfbP");
+        MaxSdk.SetSdkKey("-feJa9bEGOmZW95XxkyfhE2R_yHQ4poWZofsvPWhIw_es2dT16vUIDRoHKX63m6a9JD7wX1Q0PZ0Qng8EukpFT");
         MaxSdk.InitializeSdk();
     }
 
@@ -155,10 +157,11 @@ public class ApplovinManager : MonoBehaviour
 
     private void LoadRewardedAd()
     {
+        isWatched = false;
         MaxSdk.LoadRewardedAd(rewardAdUnit);
         //MyAnalytic.AdRewardRequest();
         Debug.Log("[Max] reward init!");
-        MyAnalytic.LogEvent(MyAnalytic.AD_REWARD_REQUEST);
+        //MyAnalytic.LogEvent(MyAnalytic.AD_REWARD_REQUEST);
     }
 
     private void OnRewardedAdLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
@@ -194,13 +197,18 @@ public class ApplovinManager : MonoBehaviour
     private void OnRewardedAdHiddenEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
     {
         // Rewarded ad is hidden. Pre-load the next ad
-        LoadRewardedAd();
+
+        DOTween.Sequence().SetDelay(.15f).OnComplete(() =>
+        {
+            _acRewarded?.Invoke(isWatched);
+            LoadRewardedAd();
+        });
     }
 
     private void OnRewardedAdReceivedRewardEvent(string adUnitId, MaxSdk.Reward reward, MaxSdkBase.AdInfo adInfo)
     {
         // The rewarded ad displayed and the user should receive the reward.
-        _acRewarded?.Invoke(true);
+        isWatched = true;
         MyAnalytic.LogEvent(MyAnalytic.AD_REWARD_IMPRESSION);
     }
 
@@ -230,6 +238,10 @@ public class ApplovinManager : MonoBehaviour
     public bool IsRewardedReady()
     {
         return MaxSdk.IsRewardedAdReady(rewardAdUnit);
+    }
+    public bool IsInterReady()
+    {
+        return MaxSdk.IsInterstitialReady(intertitialAdUnit);
     }
     #endregion
 }

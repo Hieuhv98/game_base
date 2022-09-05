@@ -53,37 +53,27 @@ namespace AppLovinMax.Scripts.Editor
             "Smaato"
         };
 
-        private static List<string> DynamicLibraryPathsToEmbed
+        private static List<string> DynamicLibrariesToEmbed
         {
             get
             {
-                var dynamicLibraryPathsToEmbed = new List<string>(2);
-                dynamicLibraryPathsToEmbed.Add(Path.Combine("Pods/", "HyprMX/HyprMX.xcframework"));
-                dynamicLibraryPathsToEmbed.Add(Path.Combine("Pods/", "smaato-ios-sdk/vendor/OMSDK_Smaato.xcframework"));
-                dynamicLibraryPathsToEmbed.Add(Path.Combine("Pods/", "FBSDKCoreKit_Basics/XCFrameworks/FBSDKCoreKit_Basics.xcframework"));
-                dynamicLibraryPathsToEmbed.Add(Path.Combine("Pods/", "OguryAds/OguryAds/OMSDK_Ogury.xcframework"));
+                var dynamicLibrariesToEmbed = new List<string>()
+                {
+                    "FBAudienceNetwork.xcframework",
+                    "FBSDKCoreKit_Basics.xcframework",
+                    "HyprMX.xcframework",
+                    "OMSDK_Ogury.xcframework",
+                    "OMSDK_Pubnativenet.xcframework",
+                    "OMSDK_Smaato.xcframework"
+                };
 
                 if (ShouldEmbedSnapSdk())
                 {
-                    dynamicLibraryPathsToEmbed.Add(Path.Combine("Pods/", "SAKSDK/SAKSDK.framework"));
-                    dynamicLibraryPathsToEmbed.Add(Path.Combine("Pods/", "SAKSDK/SAKSDK.xcframework"));
+                    dynamicLibrariesToEmbed.Add("SAKSDK.framework");
+                    dynamicLibrariesToEmbed.Add("SAKSDK.xcframework");
                 }
 
-                return dynamicLibraryPathsToEmbed;
-            }
-        }
-
-        /// <summary>
-        /// Some library paths might contain versions and can't be hardcoded. So, we'll instead search for these libraries in the Pods/ directory.
-        /// </summary>
-        private static List<string> DynamicLibrariesToSearchToEmbed
-        {
-            get
-            {
-                return new List<string>()
-                {
-                    "OMSDK_Pubnativenet.xcframework"
-                };
+                return dynamicLibrariesToEmbed;
             }
         }
 
@@ -91,8 +81,7 @@ namespace AppLovinMax.Scripts.Editor
         {
             get
             {
-                var swiftLanguageNetworks = new List<string>(2);
-                swiftLanguageNetworks.Add("MoPub");
+                var swiftLanguageNetworks = new List<string>(1);
                 if (ShouldAddSwiftSupportForFacebook())
                 {
                     swiftLanguageNetworks.Add("Facebook");
@@ -105,7 +94,6 @@ namespace AppLovinMax.Scripts.Editor
         private static readonly List<string> EmbedSwiftStandardLibrariesNetworks = new List<string>
         {
             "Facebook",
-            "MoPub"
         };
 
         private static string PluginMediationDirectory
@@ -150,21 +138,21 @@ namespace AppLovinMax.Scripts.Editor
 
         private static void EmbedDynamicLibrariesIfNeeded(string buildPath, PBXProject project, string targetGuid)
         {
-            var dynamicLibraryPathsPresentInProject = DynamicLibraryPathsToEmbed.Where(dynamicLibraryPath => Directory.Exists(Path.Combine(buildPath, dynamicLibraryPath))).ToList();
-            var podsDirectory = Path.Combine(buildPath, "Pods");
             // Check that the Pods directory exists (it might not if a publisher is building with Generate Podfile setting disabled in EDM).
-            if (Directory.Exists(podsDirectory))
+            var podsDirectory = Path.Combine(buildPath, "Pods");
+            if (!Directory.Exists(podsDirectory)) return;
+            
+            var dynamicLibraryPathsPresentInProject = new List<string>();
+            foreach (var dynamicLibraryToSearch in DynamicLibrariesToEmbed)
             {
-                foreach (var dynamicLibraryToSearch in DynamicLibrariesToSearchToEmbed)
-                {
-                    // both .framework and .xcframework are directories, not files
-                    var directories = Directory.GetDirectories(podsDirectory, dynamicLibraryToSearch, SearchOption.AllDirectories);
-                    if (directories.Length <= 0) continue;
+                // both .framework and .xcframework are directories, not files
+                var directories = Directory.GetDirectories(podsDirectory, dynamicLibraryToSearch, SearchOption.AllDirectories);
+                if (directories.Length <= 0) continue;
 
-                    var index = directories[0].LastIndexOf("Pods");
-                    var relativePath = directories[0].Substring(index);
-                    dynamicLibraryPathsPresentInProject.Add(relativePath);
-                }
+                var dynamicLibraryAbsolutePath = directories[0];
+                var index = dynamicLibraryAbsolutePath.LastIndexOf("Pods");
+                var relativePath = dynamicLibraryAbsolutePath.Substring(index);
+                dynamicLibraryPathsPresentInProject.Add(relativePath);
             }
 
             if (dynamicLibraryPathsPresentInProject.Count <= 0) return;

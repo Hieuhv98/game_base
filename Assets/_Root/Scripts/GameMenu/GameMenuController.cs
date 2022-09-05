@@ -14,12 +14,13 @@ using DG.Tweening;
 using Game_Base.Control;
 using Gamee_Hiukka.Other;
 using static Gamee_Hiukka.Control.Gamemanager;
+using UnityEngine.UI;
 
-namespace Gamee_Hiukka.Control 
+namespace Gamee_Hiukka.Control
 {
     public class GameMenuController : MonoBehaviour
     {
-        [SerializeField] private SkeletonGraphic skePlayer;
+        [SerializeField] SkeletonGraphic skeleton;
         [SerializeField] private ButtonBase btnStartGame;
         [SerializeField] private ButtonBase btnSetting;
         [SerializeField] private ButtonBase btnShop;
@@ -28,15 +29,15 @@ namespace Gamee_Hiukka.Control
         [SerializeField] private ButtonBase btnDebug;
         [SerializeField] private TextMeshProUGUI txtLevel;
         [SerializeField] private GameObject dailyNoti;
+        [SerializeField] private GameObject skinNoti;
+        [SerializeField] private GameObject fbNoti;
+        [SerializeField] private GameObject rankNoti;
         [SerializeField] private CoinDisplay coinDisplay;
         [SerializeField] private List<ObjMoveUI> objMoves;
-        [SerializeField] private ButtonBase btnNextRoom;
-        [SerializeField] private GameObject fxUnlockNewRoom;
 
-        bool isLoadLevelCompleted = false;
         ObjMoveUI coinObjMove = null;
 
-        public void Start() 
+        public void Start()
         {
             Init();
         }
@@ -44,8 +45,6 @@ namespace Gamee_Hiukka.Control
         public void Init()
         {
             AudioManager.Instance.PlayAudioBackGroundGameMenu();
-            Util.UpdateSkinCurrent(skePlayer);
-            isLoadLevelCompleted = false;
 
             //LoadLevelMap();
 
@@ -58,32 +57,39 @@ namespace Gamee_Hiukka.Control
 
             btnShop.onClick.RemoveListener(ShowPopupShop);
             btnShop.onClick.AddListener(ShowPopupShop);
-            
+
             btnDaily.onClick.RemoveListener(ShowPopupDailyReward);
             btnDaily.onClick.AddListener(ShowPopupDailyReward);
 
             UpdateDisplay();
-/*            if (!GameData.IsShowRated && GameData.LevelCurrent > 11)
-            {
-                ShowPopupRate();
-                GameData.IsShowRated = true;
-            }*/
 
             dailyNoti.SetActive(GameData.HasReward);
+            skinNoti.SetActive(SkinResources.Instance.CanBuySkin);
+            fbNoti.SetActive(!GameData.IsLoginFB);
+            rankNoti.SetActive(GameData.UserName == "");
 
-            if(GameData.IsNewGame && Config.AutoStartGame) 
-            {
-                StartGame();
-            }
+            UIDefaut();
+            UpdateSkin();
+
+            if (!Config.IsAutoShowDailyReward) CheckNewUpdate();
             else
             {
-                //UIDefaut();
+                if (GameData.HasReward)
+                {
+                    DOTween.Sequence().SetDelay(.35f).OnComplete(() =>
+                    {
+                        GamePopup.Instance.ShowPopupDailyReward(() =>
+                        {
+                            UpdateSkin();
+                            CheckNewUpdate();
+                        });
+                    });
+                }
+                else CheckNewUpdate();
             }
 
-            CheckNewUpdate();
-
             AdsManager.Instance.HideAdsBanner();
-            
+
             coinDisplay.ActionClose -= UpdateDisplay;
             coinDisplay.ActionClose += UpdateDisplay;
 
@@ -98,11 +104,12 @@ namespace Gamee_Hiukka.Control
             btnRemoveAds.gameObject.SetActive(!DataParam.removeAds);
         }
 
-        void OnCoinChange() 
+        void OnCoinChange()
         {
+            skinNoti.SetActive(SkinResources.Instance.CanBuySkin);
         }
 
-        void CheckNewUpdate() 
+        void CheckNewUpdate()
         {
             if (Util.ConvertVersion(Application.version) < Util.ConvertVersion(GameData.VersionApp))
             {
@@ -115,26 +122,29 @@ namespace Gamee_Hiukka.Control
                     DataController.SaveStatusUpdate();
                 }
 
-                if (!GameData.IsDontShowUpdate && GameData.LevelCurrent != 1)
+                if (!GameData.IsDontShowUpdate && GameData.LevelCurrent > Config.LevelShowUpdate)
                 {
                     GamePopup.Instance.ShowPopupNewUpdate();
                 }
             }
         }
 
-        public void ShowPopupRate() 
+        public void ShowPopupRate()
         {
-            GamePopup.Instance.ShowPopupRate();
+            //GamePopup.Instance.ShowPopupRate();
         }
-        private void ShowPopupSetting() 
+        private void ShowPopupSetting()
         {
-            GamePopup.Instance.ShowPopupSetting(HidePopup);
+            /*            isShowSetting = !isShowSetting;
+                        if (isShowSetting) settingAnimator.Play("ShowSetting");
+                        else settingAnimator.Play("HideSetting");*/
+            GamePopup.Instance.ShowPopupSetting(null);
         }
         public void ShowPopupRank()
         {
             if (GameData.UserName.Equals(""))
             {
-                GamePopup.Instance.ShowPopupLogin();
+                GamePopup.Instance.ShowPopupLogin(() => { rankNoti.SetActive(GameData.UserName == ""); });
             }
             else
             {
@@ -167,38 +177,40 @@ namespace Gamee_Hiukka.Control
             GamePopup.Instance.ShowPopupDailyReward(UpdateSkin);
         }
 
-        public void ShowPopupFB() 
+        public void ShowPopupFB()
         {
-            GamePopup.Instance.ShowPopupFaceBook();
+            GamePopup.Instance.ShowPopupFaceBook(() => fbNoti.SetActive(!GameData.IsLoginFB));
         }
 
-        public void ShowPopupDebug() 
+        public void ShowPopupDebug()
         {
             GamePopup.Instance.ShowPopupDebug();
         }
 
         private void StartGame()
         {
+            GamePopup.Instance.HideAll();
             coinDisplay.ActionClose -= UpdateDisplay;
             coinDisplay.ActionUpdate -= OnCoinChange;
             SceneManager.LoadScene(2);
         }
 
-        private void HidePopup() 
+        private void HidePopup()
         {
             GamePopup.Instance.Hide();
         }
 
-        private void UpdateSkin() 
+        private void UpdateSkin()
         {
-            Util.UpdateSkinCurrent(skePlayer);
             dailyNoti.SetActive(GameData.HasReward);
+            skinNoti.SetActive(SkinResources.Instance.CanBuySkin);
+            Util.UpdateSkinCurrent(skeleton);
             UpdateDisplay();
         }
-         
+
         public void UIMove()
         {
-            btnStartGame.interactable = false;
+            //btnStartGame.interactable = false;
             foreach (var obj in objMoves)
             {
                 obj.Move();
@@ -207,8 +219,7 @@ namespace Gamee_Hiukka.Control
 
         public void UIMoveBack()
         {
-            btnStartGame.interactable = true;
-
+            //btnStartGame.interactable = true;
             foreach (var obj in objMoves)
             {
                 obj.MoveBack();

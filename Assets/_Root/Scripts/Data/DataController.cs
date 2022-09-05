@@ -17,7 +17,7 @@ namespace Gamee_Hiukka.Control
             GameData.LevelCurrent = PlayerPrefs.GetInt(DataKey.KEY_LEVEL_CURRENT, 1);
         }
 
-        public static void SaveLevelCurrent() 
+        public static void SaveLevelCurrent()
         {
             PlayerPrefs.SetInt(DataKey.KEY_LEVEL_CURRENT, GameData.LevelCurrent);
         }
@@ -42,27 +42,49 @@ namespace Gamee_Hiukka.Control
         {
             PlayerPrefs.SetInt(DataKey.KEY_LEVEL_INDEX_CURRENT, GameData.LevelIndexCurrent);
         }
-
-        public static void LoadLevelList()
+        public static void LoadLevelCollectionIndexCurrent()
         {
-            string levelListData = LoadLevelListData();
-            if(levelListData != "") 
-            {
-                GameData.LevelList = JsonHelper.FromJson<int>(levelListData).ToList();
-            }
-            else 
+            GameData.LevelCollectionIndexCurrent = PlayerPrefs.GetInt(DataKey.KEY_LEVEL_COLLECTION_INDEX_CURRENT, 0);
+        }
+
+        public static void SaveLevelCollectionIndexCurrent()
+        {
+            PlayerPrefs.SetInt(DataKey.KEY_LEVEL_COLLECTION_INDEX_CURRENT, GameData.LevelCollectionIndexCurrent);
+        }
+        public static void LoadLevelList(bool isReload = false)
+        {
+            if (isReload)
             {
                 List<int> temp = new List<int>();
-                for(int i = 1; i <= Config.LevelMax; i++) 
+                for (int i = 1; i <= Config.LevelMax; i++)
                 {
                     temp.Add(i);
                 }
                 GameData.LevelList = temp;
                 SaveLevelList();
             }
+            else
+            {
+                string levelListData = LoadLevelListData();
+                if (levelListData != "")
+                {
+                    GameData.LevelList = JsonHelper.FromJson<int>(levelListData).ToList();
+                }
+                else
+                {
+                    GameData.LevelMax = Config.LevelMax;
+                    List<int> temp = new List<int>();
+                    for (int i = 1; i <= Config.LevelMax; i++)
+                    {
+                        temp.Add(i);
+                    }
+                    GameData.LevelList = temp;
+                    SaveLevelList();
+                }
+            }
         }
 
-        private static string LoadLevelListData() 
+        private static string LoadLevelListData()
         {
             return PlayerPrefs.GetString(DataKey.KEY_LEVEL_LIST_DATA);
         }
@@ -73,15 +95,56 @@ namespace Gamee_Hiukka.Control
             PlayerPrefs.SetString(DataKey.KEY_LEVEL_LIST_DATA, levelListData);
         }
 
+        public static void LoadLevelCollectionList(bool isReload = false)
+        {
+            if (isReload)
+            {
+                List<int> temp = new List<int>();
+                for (int i = 1; i <= Config.LevelCollectionMax; i++)
+                {
+                    temp.Add(i);
+                }
+                GameData.LevelCollectionList = temp;
+                SaveLevelCollectionList();
+            }
+            else
+            {
+                string levelCollectionListData = LoadLevelCollectionListData();
+                if (levelCollectionListData != "")
+                {
+                    GameData.LevelCollectionList = JsonHelper.FromJson<int>(levelCollectionListData).ToList();
+                }
+                else
+                {
+                    GameData.LevelCollectionMax = Config.LevelCollectionMax;
+                    List<int> temp = new List<int>();
+                    for (int i = 1; i <= Config.LevelCollectionMax; i++)
+                    {
+                        temp.Add(i);
+                    }
+                    GameData.LevelCollectionList = temp;
+                    SaveLevelCollectionList();
+                }
+            }
+        }
+        private static string LoadLevelCollectionListData()
+        {
+            return PlayerPrefs.GetString(DataKey.KEY_LEVEL_COLLECTION_LIST_DATA);
+        }
+        public static void SaveLevelCollectionList()
+        {
+            string levelCollectionListData = JsonHelper.ToJson(GameData.LevelCollectionList.ToArray());
+            PlayerPrefs.SetString(DataKey.KEY_LEVEL_COLLECTION_LIST_DATA, levelCollectionListData);
+        }
         // levels bonus
-        public static void LoadIsProcessFull() 
+        public static void LoadIsProcessFull()
         {
             var isProcessFull = true;
             bool.TryParse(PlayerPrefs.GetString(DataKey.KEY_IS_PROCESS_FULL, "false"), out isProcessFull);
             GameData.IsProcessFull = isProcessFull;
         }
 
-        public static void SaveIsProcessFull() 
+        public static void SaveIsProcessFull()
         {
             PlayerPrefs.SetString(DataKey.KEY_IS_PROCESS_FULL, GameData.IsProcessFull.ToString());
         }
@@ -91,20 +154,16 @@ namespace Gamee_Hiukka.Control
             return PlayerPrefs.GetString(DataKey.KEY_LEVEL_BONUS_LIST_DATA);
         }
 
-        public static void LoadIDSKinCurrent() 
+        public static void LoadIDSKinCurrent()
         {
-            if (PlayerPrefs.GetString(DataKey.KEY_ID_SKIN_CURRENT) != "")
-            {
-                GameData.IDSkinCurrent = PlayerPrefs.GetString(DataKey.KEY_ID_SKIN_CURRENT);
-            }
-            else GameData.IDSkinCurrent = SkinResources.Instance.GetSkinDefaut().ID;
+            if (GameData.IDSkinCurrent == "") GameData.IDSkinCurrent = SkinResources.Instance.GetSkinDefaut().ID;
         }
-        public static void SaveIDSkinCurrent() 
+        public static void SaveIDSkinCurrent()
         {
             PlayerPrefs.SetString(DataKey.KEY_ID_SKIN_CURRENT, GameData.IDSkinCurrent);
         }
 
-        public static void LoadSKinUnlockCount ()
+        public static void LoadSKinUnlockCount()
         {
             GameData.SkinUnlockCout = PlayerPrefs.GetInt(DataKey.KEY_SKIN_UNLOCK_COUNT, 0);
         }
@@ -113,14 +172,14 @@ namespace Gamee_Hiukka.Control
             PlayerPrefs.SetInt(DataKey.KEY_SKIN_UNLOCK_COUNT, GameData.SkinUnlockCout);
         }
         #endregion
-        
+
         #region iap
-        public static void LoadRemoveAds() 
+        public static void LoadRemoveAds()
         {
             bool.TryParse(PlayerPrefs.GetString(DataKey.REMOVE_ADS, "false"), out DataParam.removeAds);
         }
 
-        public static void SaveRemoveAds() 
+        public static void SaveRemoveAds()
         {
             PlayerPrefs.SetString(DataKey.REMOVE_ADS, DataParam.removeAds.ToString());
         }

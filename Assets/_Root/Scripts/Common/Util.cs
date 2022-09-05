@@ -43,11 +43,12 @@ public static partial class Util
         return avatar;
     }
 
-    public static void ShowDelay(GameObject obj, float time = 1f) 
+    public static void ShowDelay(GameObject obj, float time = 1f, bool isScale = false) 
     {
         obj.SetActive(false);
         DOTween.Sequence().SetDelay(time).OnComplete(() =>
         {
+            if (isScale) obj.DoScale(1.25f);
             obj.SetActive(true);
         });
     }

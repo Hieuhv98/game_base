@@ -11,7 +11,9 @@ namespace Gamee_Hiukka.Common
         GAME_ENDING,
         GAME_WATTING,
         GAME_WIN,
-        GAME_LOSE
+        GAME_LOSE,
+        GAME_PAUSE,
+        GAME_TUTORIAL
     }
 
     public enum EGameLoadData

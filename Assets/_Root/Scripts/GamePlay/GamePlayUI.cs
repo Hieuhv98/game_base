@@ -40,6 +40,9 @@ namespace Gamee_Hiukka.UI
                     break;
             }
         }
+        public void Defaut()
+        {
+        }
 
         public void UpdateBG() 
         {

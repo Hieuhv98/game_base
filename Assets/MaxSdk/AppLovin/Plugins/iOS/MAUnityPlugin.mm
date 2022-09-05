@@ -297,12 +297,6 @@ extern "C"
         _sdk.targetingData.phoneNumber = NSSTRING(phoneNumber);
     }
 
-    void _MaxSetTargetingDataZipCode(const char *zipCode)
-    {
-        if ( !isPluginInitialized() ) return;
-        _sdk.targetingData.zipCode = NSSTRING(zipCode);
-    }
-
     void _MaxSetTargetingDataKeywords(char **keywords, int size)
     {
         if ( !isPluginInitialized() ) return;
@@ -749,6 +743,11 @@ extern "C"
     bool _MaxIsTablet()
     {
         return [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad;
+    }
+
+    bool _MaxIsPhysicalDevice()
+    {
+        return !ALUtils.simulator;
     }
     
     static const char * cStringCopy(NSString *string)

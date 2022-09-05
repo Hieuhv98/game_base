@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using DG.Tweening;
+using System.Globalization;
 
 namespace Gamee_Hiukka.Control
 {
@@ -37,15 +38,22 @@ namespace Gamee_Hiukka.Control
         private const string DESCRIPTION_APP = "DESCRIPTION_APP";
 
         private const string AUTO_START_GAME = "AUTO_START_GAME";
+        private const string IS_RANDOM_ITEM_SELLECT = "IS_RANDOM_ITEM_SELLECT";
+        private const string IS_SHOW_DAILY_REWARD = "IS_SHOW_DAILY_REWARD";
+        private const string IS_INTER_ADS_SHOW_LEVEL_BOSS = "IS_INTER_ADS_SHOW_LEVEL_BOSS";
+        private const string ANIMATION_ACCELERATION_COUNT = "ANIMATION_ACCELERATION_COUNT";
+        private const string IS_PLAYER_TAP_CONTROL = "IS_PLAYER_TAP_CONTROL";
+        private const string IS_SHOW_INTER_ADS_BEFORE_WIN = "IS_SHOW_INTER_ADS_BEFORE_WIN";
+        private const string PROCESS_COUNT = "PROCESS_COUNT";
         private readonly Dictionary<string, object> defaults = new Dictionary<string, object>();
 
         public void Init()
         {
             defaults.Add(IS_ADMOB, "true");
 #if UNITY_ANDROID
-            defaults.Add(ADMOB_ANDROID_BANNER_ID, "ca-app-pub-8566745611252640/3512982444");
-            defaults.Add(ADMOB_ANDROID_INTERTITIAL_ID, "ca-app-pub-8566745611252640/9886819107");
-            defaults.Add(ADMOB_ANDROID_REWARDED_ID, "ca-app-pub-8566745611252640/5947574099");
+            defaults.Add(ADMOB_ANDROID_BANNER_ID, "ca-app-pub-8566745611252640/4061842748");
+            defaults.Add(ADMOB_ANDROID_INTERTITIAL_ID, "ca-app-pub-8566745611252640/8931026047");
+            defaults.Add(ADMOB_ANDROID_REWARDED_ID, "ca-app-pub-8566745611252640/6304862704");
 #elif UNITY_IOS
                     defaults.Add(ADMOB_IOS_BANNER_ID, "ca-app-pub-8566745611252640/3693336145");
                     defaults.Add(ADMOB_IOS_INTERTITIAL_ID, "ca-app-pub-8566745611252640/1067172801");
@@ -63,6 +71,13 @@ namespace Gamee_Hiukka.Control
             defaults.Add(VERSION_APP_IOS, "1.0");
             defaults.Add(DESCRIPTION_APP, "New Update");
             defaults.Add(AUTO_START_GAME, "false");
+            defaults.Add(IS_RANDOM_ITEM_SELLECT, "true");
+            defaults.Add(IS_SHOW_DAILY_REWARD, "true");
+            defaults.Add(IS_INTER_ADS_SHOW_LEVEL_BOSS, "false");
+            defaults.Add(ANIMATION_ACCELERATION_COUNT, "1");
+            defaults.Add(IS_PLAYER_TAP_CONTROL, "false");
+            defaults.Add(IS_SHOW_INTER_ADS_BEFORE_WIN, "false");
+            defaults.Add(PROCESS_COUNT, "10");
             Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults);
 
             FetchDataAsync();
@@ -139,6 +154,9 @@ namespace Gamee_Hiukka.Control
 
             GameData.DescritptionApp = Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(DESCRIPTION_APP).StringValue;
             Config.AutoStartGame = bool.Parse(Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(AUTO_START_GAME).StringValue);
+            Config.IsAutoShowDailyReward = bool.Parse(Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(IS_SHOW_DAILY_REWARD).StringValue);
+            Config.IsShowInterAdsBeforeWin = bool.Parse(Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(IS_SHOW_INTER_ADS_BEFORE_WIN).StringValue);
+            Config.ProcessCount = int.Parse(Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(PROCESS_COUNT).StringValue);
 
             DOTween.Sequence().SetDelay(.1f).OnComplete(() => AdsManager.Instance.InitAds()) ;
         }

@@ -7,24 +7,26 @@ using TMPro;
 using Gamee_Hiukka.Common;
 using Gamee_Hiukka.Data;
 using Gamee_Hiukka.Control;
+using UnityEngine.UI;
 
 namespace Gamee_Hiukka.UI 
 {
     public class PopupLose : PopupBase
     {
+        [SerializeField] Image image;
         [SerializeField] private ButtonBase btnReplay;
         [SerializeField] private ButtonBase btnSkip;
         //[SerializeField] private ButtonBase btnNextLevel;
         [SerializeField] private TextMeshProUGUI txtLevel;
 
         private Action _actionReplay;
-        private Action _actionSkip;
+        private Action<Action<bool>> _actionSkip;
         private Action _actionClose;
         private Action _actionNextLevel;
         private Action _actionBackToHome;
         bool isSellected = false;
 
-        public void Initialize(Action actionClose, Action actionReplay, Action actionSkip, Action actionNextLevel, Action actionBackToHome)
+        public void Initialize(Action actionClose, Action actionReplay, Action<Action<bool>> actionSkip, Action actionNextLevel, Action actionBackToHome)
         {
             _actionReplay = actionReplay;
             _actionClose = actionClose;
@@ -43,19 +45,22 @@ namespace Gamee_Hiukka.UI
             btnSkip.onClick.RemoveListener(SkipLevel);
             btnSkip.onClick.AddListener(SkipLevel);
 
-            Gamemanager.Instance.CameraRoom(this.gameObject);
+            //Gamemanager.Instance.CameraRoom(this.gameObject);
         }
 
-        private void SkipLevel() 
+        public void SkipLevel() 
         {
             if (isSellected) return;
-            isSellected = true;
+            if (AdsManager.Instance.IsLoaded) isSellected = true;
 
-            Hide();
-            _actionSkip?.Invoke();
+            _actionSkip?.Invoke((isWatced) => 
+            {
+                if (isWatced) Hide();
+                else isSellected = false;
+            });
         }
 
-        private void ReplayLevel() 
+        public void ReplayLevel() 
         {
             if (isSellected) return;
             isSellected = true;

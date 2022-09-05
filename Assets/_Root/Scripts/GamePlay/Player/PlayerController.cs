@@ -16,10 +16,10 @@ namespace Gamee_Hiukka.Control
         [SerializeField] EPlayerState state;
         [SerializeField] GameObject model;
 
-        SkeletonMecanim skePlayer;
+        SkeletonAnimation skePlayer;
         private void Awake()
         {
-            skePlayer = model.GetComponent<SkeletonMecanim>();
+            skePlayer = model.GetComponent<SkeletonAnimation>();
         }
         void Start()
         {
@@ -29,7 +29,6 @@ namespace Gamee_Hiukka.Control
         public void UpdateSkinCurrent() 
         {
             var skin = SkinResources.Instance.GetSkinCurrent().SkinName;
-
             skePlayer.Skeleton.SetSkin(skin);
             skePlayer.Skeleton.SetSlotsToSetupPose();
         }

@@ -11,7 +11,6 @@ public class FirebaseApp : Singleton<FirebaseApp>
 
     Firebase.FirebaseApp instance;
 
-    public Firebase.FirebaseApp Instance => instance;
     public void Init()
     {
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
@@ -23,7 +22,7 @@ public class FirebaseApp : Singleton<FirebaseApp>
                 instance = Firebase.FirebaseApp.DefaultInstance;
 
                 remoteConfig.Init();
-                firebaseCloundMessege.Init();
+                //firebaseCloundMessege.Init();
             }
             else
             {

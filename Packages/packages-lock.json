@@ -15,47 +15,38 @@
       "hash": "6ec0ed8d6132a36eb99a7097d85702cc3c052ff4"
     },
     "com.google.external-dependency-manager": {
-      "version": "https://github.com/Gamee-Studio/external-dependency-manager.git?path=Assets/_Root#1.2.170",
+      "version": "https://github.com/pancake-llc/external-dependency-manager.git?path=Assets/_Root#1.2.172",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "09d1fac2d7e800b4ab06911a783e27928d90b3fb"
+      "hash": "be223665d76307df88420929a3b8cd6b002b113d"
     },
     "com.google.firebase.analytics": {
-      "version": "https://github.com/Gamee-Studio/firebase-analytics.git?path=Assets/_Root#8.9.0",
+      "version": "https://github.com/pancake-llc/firebase-analytics.git?path=Assets/_Root#9.4.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.google.firebase.app": "8.9.0"
+        "com.google.firebase.app": "9.4.0"
       },
-      "hash": "00659c0e1a60785b46e067381fd3a88bbca564fb"
+      "hash": "dda7012ca5e9c0c96b3f647d93c0b50ac6c7947b"
     },
     "com.google.firebase.app": {
-      "version": "https://github.com/Gamee-Studio/firebase-app.git?path=Assets/_Root#8.9.0",
+      "version": "https://github.com/pancake-llc/firebase-app.git?path=Assets/_Root#9.4.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.google.external-dependency-manager": "1.2.170"
+        "com.google.external-dependency-manager": "1.2.172"
       },
-      "hash": "a009cf801b1ec16d8801845347eb27071d32f1be"
-    },
-    "com.google.firebase.messaging": {
-      "version": "https://github.com/snorluxe/firebase-messaging.git?path=Assets/_Root#8.8.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.google.firebase.app": "8.8.0"
-      },
-      "hash": "e70094b630f35da455d275a48a1335ee415c1e78"
+      "hash": "adb6f9bb1a5c262451ce71729d5e6791b968d5a2"
     },
     "com.google.firebase.remote-config": {
-      "version": "https://github.com/Gamee-Studio/firebase-remote-config.git?path=Assets/_Root#8.9.0",
+      "version": "https://github.com/pancake-llc/firebase-remote-config.git?path=Assets/_Root#9.4.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.google.firebase.app": "8.9.0"
+        "com.google.firebase.app": "9.4.0"
       },
-      "hash": "d56b981becedbcf6a9d896316c03b81572e1452b"
+      "hash": "731d94f1169a65b5afbf749513db72f705e7ff3e"
     },
     "com.neuecc.unirx": {
       "version": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
@@ -64,76 +55,27 @@
       "dependencies": {},
       "hash": "284d5c50d3f1ddd9fa7df3d382ea904732a9c2ff"
     },
-    "com.snorlax.common": {
-      "version": "https://github.com/snorluxe/common.git?path=Assets/_Root#1.0.11",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "9718371dde329772afdaebdf25ef6d15daffab8f"
-    },
-    "com.snorlax.local-notification": {
-      "version": "https://github.com/snorluxe/local-notification.git?path=Assets/_Root#2022.2.17",
+    "com.pancake.common": {
+      "version": "https://github.com/pancake-llc/common.git?path=Assets/_Root#1.2.5",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.unity.mobile.notifications": "1.4.2"
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
       },
-      "hash": "4d10581cd1df34be625444c447f9b61a43b6fa73"
+      "hash": "09f0e9717aa5042a18bc1935ded86d811a1c9176"
     },
-    "com.unity.2d.animation": {
-      "version": "5.0.10",
+    "com.pancake.level-editor": {
+      "version": "https://github.com/pancake-llc/level-editor.git?path=Assets/_Root#1.1.4",
       "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.2d.common": "4.0.4",
-        "com.unity.mathematics": "1.1.0",
-        "com.unity.2d.sprite": "1.0.0",
-        "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.uielements": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.2d.common": {
-      "version": "4.0.4",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.2d.sprite": "1.0.0",
-        "com.unity.modules.uielements": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.2d.path": {
-      "version": "4.0.2",
-      "depth": 1,
-      "source": "registry",
+      "source": "git",
       "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.2d.pixel-perfect": {
-      "version": "4.0.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
+      "hash": "fe41d346d024c497a438ce9076a3df0049ef1e8c"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
       "source": "builtin",
       "dependencies": {}
-    },
-    "com.unity.2d.spriteshape": {
-      "version": "5.1.7",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.mathematics": "1.1.0",
-        "com.unity.2d.common": "4.0.4",
-        "com.unity.2d.path": "4.0.2",
-        "com.unity.modules.physics2d": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
     },
     "com.unity.2d.tilemap": {
       "version": "1.0.0",
@@ -142,7 +84,7 @@
       "dependencies": {}
     },
     "com.unity.addressables": {
-      "version": "1.19.18",
+      "version": "1.19.19",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -152,15 +94,6 @@
         "com.unity.modules.jsonserialize": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0",
         "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.ads": {
-      "version": "3.7.5",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.ugui": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -174,7 +107,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "1.15.13",
+      "version": "1.15.18",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -190,16 +123,16 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "2.0.7",
+      "version": "3.0.15",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.test-framework": "1.1.1"
+        "com.unity.ext.nunit": "1.0.6"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.14",
+      "version": "2.0.16",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -214,33 +147,24 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.mathematics": {
-      "version": "1.1.0",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.mobile.notifications": {
-      "version": "1.4.2",
-      "depth": 1,
+      "version": "2.0.2",
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.modules.androidjni": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.multiplayer-hlapi": {
-      "version": "1.0.8",
-      "depth": 0,
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.0.2",
+      "depth": 1,
       "source": "registry",
-      "dependencies": {
-        "nuget.mono-cecil": "0.1.6-preview"
-      },
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.purchasing": {
-      "version": "4.1.3",
+      "version": "4.1.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -254,18 +178,20 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.19.6",
+      "version": "1.20.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.services.core": {
-      "version": "1.0.1",
+      "version": "1.4.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.unitywebrequest": "1.0.0"
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.0.2",
+        "com.unity.modules.androidjni": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -290,7 +216,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.4.8",
+      "version": "1.6.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -318,13 +244,6 @@
         "com.unity.modules.vr": "1.0.0",
         "com.unity.modules.xr": "1.0.0"
       },
-      "url": "https://packages.unity.com"
-    },
-    "nuget.mono-cecil": {
-      "version": "0.1.6-preview",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.modules.ai": {

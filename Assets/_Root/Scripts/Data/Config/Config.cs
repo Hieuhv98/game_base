@@ -13,6 +13,7 @@ namespace Gamee_Hiukka.Data
 
         [Header("Game")]
         [SerializeField] private int levelMax = 100;
+        [SerializeField] private int levelCollectionMax = 10;
         [SerializeField] private int interstitialAdShowCount = 2;
         [SerializeField] private int interstitialAdFirstShowCount = 3;
         [SerializeField] private int timeInterAdShow = 25;
@@ -21,6 +22,15 @@ namespace Gamee_Hiukka.Data
         [SerializeField] private int watchVideoValue = 5;
         [SerializeField] private int levelStartLoop = 4;
         [SerializeField] private bool autoStartGame;
+        [SerializeField] private int processCount = 7;
+        [SerializeField] private int levelShowRate = 10;
+        [SerializeField] private int levelShowRateLate = 30;
+        [SerializeField] private int levelShowRateLateCount = 20;
+        [SerializeField] private bool isAutoShowDailyReward;
+        [SerializeField] private bool isShowInterAdsBeforeWin;
+        [SerializeField] private bool isShowLevelCollection = false;
+        [SerializeField] private int levelCountCollectionShow = 5;
+        [SerializeField] private int levelShowUpdate = 5;
 
         [Header("Pin")]
         [SerializeField, Range(0.1f, 5f)] private float stickSpeedBackwardCoefficient = 1f;
@@ -52,6 +62,7 @@ namespace Gamee_Hiukka.Data
         public static float StickSpeedBackwardCoefficient => Instance.stickSpeedBackwardCoefficient;
 
         public static int LevelMax { set => Instance.levelMax = value; get => Instance.levelMax; }
+        public static int LevelCollectionMax { set => Instance.levelCollectionMax = value; get => Instance.levelCollectionMax; }
         public static string AdmobAndroidBannerId { set => Instance.admobAndroidBannerId = value; get => Instance.admobAndroidBannerId; }
         public static string AdmobAndroidIntertitialId { set => Instance.admobAndroidIntertitialId = value; get => Instance.admobAndroidIntertitialId; }
         public static string AdmobAndroidRewardedId { set => Instance.admobAndroidRewardedId = value; get => Instance.admobAndroidRewardedId; }
@@ -67,8 +78,15 @@ namespace Gamee_Hiukka.Data
         public static int InterstitialAdCountCurrent { set => Instance._interstitialAdCountCurrent = value; get => Instance._interstitialAdCountCurrent; }
         public static DateTime TimeAtInterstitialAdShow { set => Instance._timeAtInterstitialAdShow = value; get => Instance._timeAtInterstitialAdShow; }
         public static DateTime TimeAtInterstitialAdLoseShow { set => Instance._timeAtInterstitialAdLoseShow = value; get => Instance._timeAtInterstitialAdLoseShow; }
-
+        public static int ProcessCount { set => Instance.processCount = value; get => Instance.processCount; }
+        public static int LevelShowRate => Instance.levelShowRate;
+        public static int LevelShowRateLate => Instance.levelShowRateLate;
+        public static int LevelShowRateLateCount => Instance.levelShowRateLateCount;
+        public static bool IsAutoShowDailyReward { set => Instance.isAutoShowDailyReward = value; get => Instance.isAutoShowDailyReward; }
+        public static bool IsShowInterAdsBeforeWin { set => Instance.isShowInterAdsBeforeWin = value; get => Instance.isShowInterAdsBeforeWin && AdsManager.Instance.IsInterLoaded; }
         public static int LevelStartLoop => Instance.levelStartLoop;
+        public static bool IsLevelCollection => GameData.LevelCurrent % Instance.levelCountCollectionShow == 0 && Instance.isShowLevelCollection;
+        public static int LevelShowUpdate => Instance.levelShowUpdate;
         public static bool IsRotationByCamera { set ; get ; }
 
         private int _interstitialAdCountCurrent = 1;

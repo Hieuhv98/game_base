@@ -78,7 +78,7 @@ namespace Gamee_Hiukka.GameUI
             }
         }
 
-        public void ShowPopupLose(Action actionClose, Action actionReplay, Action actionSkip, Action actinNextLevel, Action actionBackToHome)
+        public void ShowPopupLose(Action actionClose, Action actionReplay, Action<Action<bool>> actionSkip, Action actinNextLevel, Action actionBackToHome)
         {
             if (popupLoseHandler != null)
             {
@@ -141,7 +141,7 @@ namespace Gamee_Hiukka.GameUI
             }
         }
 
-        public void ShowPopupLogin()
+        public void ShowPopupLogin(Action actionClose)
         {
             if (popupLoginHandler != null)
             {
@@ -157,7 +157,7 @@ namespace Gamee_Hiukka.GameUI
             void Display()
             {
                 var popup = (PopupLogin)popupLoginHandler;
-                popup.Initialize();
+                popup.Initialize(actionClose);
                 Popup.Show(popupLoginHandler);
             }
         }
@@ -223,7 +223,7 @@ namespace Gamee_Hiukka.GameUI
             }
         }
 
-        public void ShowPopupFaceBook()
+        public void ShowPopupFaceBook(Action actionClose)
         {
             if (popupFaceBookHandler != null)
             {
@@ -239,7 +239,7 @@ namespace Gamee_Hiukka.GameUI
             void Display()
             {
                 var popup = (PopupFacebook)popupFaceBookHandler;
-                popup.Initialize();
+                popup.Initialize(actionClose);
                 Popup.Show(popupFaceBookHandler);
             }
         }

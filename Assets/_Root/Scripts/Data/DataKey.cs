@@ -26,6 +26,15 @@ namespace Gamee_Hiukka.Data
         public const string KEY_VERSION_DONT_UPDATE = KEY_GAME + "KEY_VERSION_DONT_UPDATE";
         public const string KEY_STATUS_UPDATE = KEY_GAME + "KEY_STATUS_UPDATE";
         public const string LEVEL_START_LOOP = KEY_GAME + "_LEVEL_START_LOOP";
+        public const string LEVEL_MAX = KEY_GAME + "LEVEL_MAX";
+        public const string LEVEL_COLLISION_MAX = KEY_GAME + "LEVEL_COLLISION_MAX";
+        public const string KEY_LEVEL_COLLECTION_LIST_DATA = KEY_GAME + "KEY_LEVEL_COLLECTION_LIST_DATA";
+        public const string KEY_LEVEL_COLLECTION_INDEX_CURRENT = KEY_GAME + "KEY_LEVEL_COLLECTION_INDEX_CURRENT";
+        public const string KEY_PROCESS_COUNT = KEY_GAME + "KEY_PROCESS_COUNT";
+        public const string KEY_CLICK_RATED = KEY_GAME + "KEY_CLICK_RATED";
+        public const string KEY_IS_SHOW_INTRO = KEY_GAME + "KEY_IS_SHOW_INTRO";
+        public const string KEY_IS_LOGIN_FB = KEY_GAME + "KEY_IS_LOGIN_FB";
+
         #endregion
         #region iap
         public static string REMOVE_ADS = KEY_GAME + "REMOVE_ADS";

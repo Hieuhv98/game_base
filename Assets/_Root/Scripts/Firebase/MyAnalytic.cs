@@ -12,6 +12,7 @@ namespace Gamee_Hiukka.Control
         public const string LEVEL_SKIP = "level_skip";
         public const string LEVEL_REPLAY = "level_replay";
         public const string LEVEL_START = "level_start";
+        public const string LEVEL_FIRST_START = "level_first_start";
 
         public const string SKIN_UNLOCKED = "skin_unlocked";
         public const string DAILY_REWARD_CLAIM = "daily_reward_claim";
@@ -26,12 +27,15 @@ namespace Gamee_Hiukka.Control
         public const string AD_REWARD_IMPRESSION = "ad_reward_impression";
         public const string AD_REWARD_REQUEST = "ad_reward_request";
 
-        public const string PLAYER_SLIDE_STICK = "player_slide_stick";
-        public const string PLAYER_CLICK_STICK = "player_click_stick";
+        public const string PLAYER_CLICK_ITEM= "player_click_item";
+        public const string PLAYER_DRAG_ITEM = "player_drag_item";
+        public const string PLAYER_UNDO_ITEM = "player_undo_item";
+        public const string PLAYER_CLICK_HINT = "player_click_hint";
 
-        public const string CLAIM_FIRST_PET = "claim_first_pet";
-        public const string CLAIM_DAILY_DAY_2 = "claim_daily_day_2";
-        public const string CLAIM_DAILY_DAY_7 = "claim_daily_day_7";
+        public const string VIBRATION_OFF = "vibration_off";
+        public const string SKIP_INTRO = "skip_intro";
+        public const string LEVEL_REWARD_BONUS = "level_reward_bonus";
+
         // paramater
         public const string LEVEL = "level";
         public const string SKIN = "skin";

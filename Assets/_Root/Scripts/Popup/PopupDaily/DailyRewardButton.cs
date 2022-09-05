@@ -63,8 +63,6 @@ namespace Gamee_Hiukka.Daily
         {
             GameData.HasReward = false;
             Received = true;
-            if (reward.DayNow == 2) MyAnalytic.LogEvent(MyAnalytic.CLAIM_DAILY_DAY_2);
-            if (reward.DayNow == 7) MyAnalytic.LogEvent(MyAnalytic.CLAIM_DAILY_DAY_7);
             actionUpdateStatus?.Invoke();
             OnUpdate();
             AdjustLog.AdjustLogEventDailyReward();

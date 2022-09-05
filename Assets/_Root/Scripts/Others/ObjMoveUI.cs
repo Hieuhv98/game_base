@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Gamee_Hiukka.Common;
+using Gamee_Hiukka.Data;
 using UnityEngine;
 
 namespace Game_Base.Control
@@ -23,32 +24,51 @@ namespace Game_Base.Control
             positionDefaut = thisRectTransform.anchoredPosition;
         }
 
-        public void Move()
+        public void Move(Action actionCompleted = null)
         {
             thisRectTransform.DOKill();
+            GameData.IsUIMoving = true;
             switch (moveType)
             {
                 case EMoveType.MOVE_UP:
                     //this.transform.DOLocalMoveY(positionDefaut.y + distane, time).SetEase(ease);
-                    thisRectTransform.DOAnchorPosY(positionDefaut.y + distane, time).SetEase(ease);
+                    thisRectTransform.DOAnchorPosY(positionDefaut.y + distane, time).SetEase(ease).OnComplete(() => 
+                    {
+                        GameData.IsUIMoving = false;
+                        actionCompleted?.Invoke();
+                    });
                     break;
                 case EMoveType.MOVE_DOWN:
                     //this.transform.DOLocalMoveY(positionDefaut.y - distane, time).SetEase(ease);
-                    thisRectTransform.DOAnchorPosY(positionDefaut.y - distane, time).SetEase(ease);
+                    thisRectTransform.DOAnchorPosY(positionDefaut.y - distane, time).SetEase(ease).OnComplete(() =>
+                    {
+                        GameData.IsUIMoving = false;
+                        actionCompleted?.Invoke();
+                    });
                     break;
                 case EMoveType.MOVE_RIGHT:
                     //this.transform.DOLocalMoveX(positionDefaut.x + distane, time).SetEase(ease);
-                    thisRectTransform.DOAnchorPosX(positionDefaut.x + distane, time).SetEase(ease);
+                    thisRectTransform.DOAnchorPosX(positionDefaut.x + distane, time).SetEase(ease).OnComplete(() =>
+                    {
+                        GameData.IsUIMoving = false;
+                        actionCompleted?.Invoke();
+                    });
                     break;
                 case EMoveType.MOVE_LEFT:
                     //this.transform.DOLocalMoveX(positionDefaut.x - distane, time).SetEase(ease);
-                    thisRectTransform.DOAnchorPosX(positionDefaut.x - distane, time).SetEase(ease);
+                    thisRectTransform.DOAnchorPosX(positionDefaut.x - distane, time).SetEase(ease).OnComplete(() =>
+                    {
+                        GameData.IsUIMoving = false;
+                        actionCompleted?.Invoke();
+                    });
                     break;
             }
         }
 
         public void Defaut()
         {
+            if (thisRectTransform == null) return;
+            GameData.IsUIMoving = false;
             thisRectTransform.anchoredPosition = positionDefaut;
         }
         public void MoveBack()

@@ -7,7 +7,7 @@ namespace Gamee_Hiukka.Common
     public static class Constant
     {
         public const string LEVEL = "Level_{0}";
-        public const string LEVEL_BONUS = "LevelBonus_{0}";
+        public const string LEVEL_COLLECTION = "LevelCollection_{0}";
         public const string LEVEL_TEXT = "LEVEL {0}";
         public const string LEVEL_BONUS_TEXT = "LEVEL BONUS";
         public const string LOADING= "Loading {0}%";

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FirebaseCloundMessage : MonoBehaviour
 {
-    public void Init()
+    /*public void Init()
     {
         Debug.Log("[FirebaseMessage] init completed!");
         Firebase.Messaging.FirebaseMessaging.TokenReceived += OnTokenReceived;
@@ -26,5 +26,5 @@ public class FirebaseCloundMessage : MonoBehaviour
     void Subscribe() 
     {
         Firebase.Messaging.FirebaseMessaging.SubscribeAsync("/topics/new_update");
-    }
+    }*/
 }
